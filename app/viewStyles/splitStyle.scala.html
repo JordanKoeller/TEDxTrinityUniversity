@@ -1,20 +1,21 @@
 @import util.Article
-@(left:Article,right:Article)
+@(left:Article,right:Article,id:String="",link:Option[String]=None)
 
-	<section class="wrapper style4 container">
+<section class="wrapper style4 container" id=@id>
 		<div class="row 150%">
+@*	@if(link.isDefined) { <a href="@link.get"> } *@
 			<div class="5u 11u(narrower)">
 				<!-- Sidebar -->
 				<div class="sidebar">
 					<section>
 						<header>
 							<h3>@left.title</h3>
-							@if(left.subtitle.isDefined) { <p> @left.subtitle.get </p> }
+							@if(left.subtitle.isDefined) {
+							<p>@left.subtitle.get</p>
+							}
 						</header>
-						@if(left.image.isDefined) {
-						<a href="#" class="image featured"><img src="@left.image.get" alt="" /></a>
-						}
-							@left.body
+						@if(left.image.isDefined) { <a href="@link.getOrElse("")" class="image featured"><img
+							src="@left.image.get" alt="" /></a> } @left.body
 
 					</section>
 				</div>
@@ -22,17 +23,21 @@
 			<div class="6u 10u(narrower) important(narrower)">
 				<!-- Content -->
 				<div class="content">
+				<a href="@link.getOrElse("")">
 					<section>
 						<header>
 							<h3>@right.title</h3>
-							@if(right.subtitle.isDefined) { <p> @right.subtitle.get </p> }
+							@if(right.subtitle.isDefined) {
+							<p>@right.subtitle.get</p>
+							}
 						</header>
-						@if(right.image.isDefined) {
-						<a href="#" class="image featured"><img src="@right.image.get" alt="" /></a>
-						}
-							@right.body
+						@if(right.image.isDefined) { <a href="#" class="image featured"><img
+							src="@right.image.get" alt="" /></a> } @right.body
 					</section>
+					</a>
 				</div>
 			</div>
-		</div>
-	</section>@* splitStyle Template File *@
+		@* @if(link.isDefined) {</a>} *@
+		</div> 
+</section>
+@* splitStyle Template File *@

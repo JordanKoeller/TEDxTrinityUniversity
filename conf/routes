@@ -5,11 +5,14 @@
 # Home page
 GET        /                             controllers.Application.index
 GET        /Events                       controllers.Application.index
+GET		   /Feed						 controllers.Application.newsfeed
 GET        /AboutTED                     controllers.Application.aboutTED
 GET        /Sponsors                     controllers.Application.sponsors
-GET        /ContactOld						 controllers.Application.contact
+GET        /ContactOld				     controllers.Application.contact
 GET        /Contact						 controllers.Application.contact2
 POST       /submitEventForm    			 controllers.Application.postEvent
+POST       /submitNewsletter             controllers.Application.postNewsfeed
+
 POST		/TestSubmission				 controllers.Test.postEvent
 
 GET        /Test                         controllers.Test.index

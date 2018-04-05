@@ -23,9 +23,11 @@ CREATE TABLE whitelisted_users (
 CREATE TABLE newsletter_post (
     post_id int NOT NULL,
     post_date date NOT NULL,
+    description text NOT NULL,
     post_user_id int NOT NULL,
     title varchar(1000) NOT NULL,
-    subtitle varchar(1000) NOT NULL
+    subtitle varchar(1000) NOT NULL,
+    media_link varchar(1000)    
 );
 
 

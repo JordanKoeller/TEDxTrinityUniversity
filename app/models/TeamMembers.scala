@@ -2,6 +2,8 @@ package models
 
 case class TeamMember(name:String,year:String, major:String, email:String, role:String, description:String,imgLink:String) {
   def classDescription:String = major + ", Class of " + year  + " <br> " + email
+  def emailName:String = email.split("@").head
+
 }
 
 object TeamMembers {
@@ -12,6 +14,15 @@ object TeamMembers {
     val tmp3 = ExecutiveCoordinator :: tmp2
     tmp3 ++ (DavidStiles :: Nil)
   }
+  
+  val Anonymous = TeamMember(
+      "Anonymous",
+      "999",
+      "",
+      "",
+      "",
+      "",
+      "")
   
   val FinancialCoordinator = TeamMember(
       "Devon Patel",

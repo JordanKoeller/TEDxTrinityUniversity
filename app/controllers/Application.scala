@@ -25,6 +25,7 @@ import scala.concurrent.duration.Duration
 import util._
 import play.api.data.Forms._
 import play.api.data._
+import models.Newsletter
 
 @Singleton
 class Application @Inject() (
@@ -40,6 +41,7 @@ class Application @Inject() (
     val content = formatEvents(events)
     Ok(views.html.main("Upcoming Events", content))
   }
+  
 
 //  private def formatEvents(events:List[TEDEvent]):Html = {
 //    val articleList = events.map{article =>
@@ -89,10 +91,15 @@ class Application @Inject() (
     val tiles = people.map{person => 
       val article1 = Article(person.role,"",None,Some(person.imgLink))
       val article2 = Article(person.name,person.description,Some(person.classDescription))
-      viewStyles.html.splitStyle(article1,article2)
+      viewStyles.html.splitStyle(article1,article2,id=person.emailName)
     }
     Ok(views.html.main("Our Team",tiles.mkString(",")))
   }
+  
+  def newsfeed = Action {
+    Ok(views.html.main("News Feed",models.Newsletter.NewsfeedList))
+  }
+  
 
   def postEvent = Action {request =>
     try {
@@ -119,6 +126,33 @@ class Application @Inject() (
     addEvent(eventGotten)
     println("Successfully added")
     Ok
+    }
+    catch {
+      case e:Throwable => {
+        println("Failed to post correctly")
+        println("Error Message: " + e.toString())
+        null
+      }
+    }
+  }
+  
+  def postNewsfeed = Action {request =>
+    try {
+      println("Received Request")
+      println(request.body.asJson)
+      val event = request.body.asJson.map{json =>
+        val title = (json \ "title").as[String]
+        val subtitle = (json \ "subtitle").as[String]
+        val author = (json \ "author").as[String]
+        val body = (json \ "body").as[String]
+        val mediaLink = (json \ "mediaLink").as[String]
+        val time = java.time.LocalDateTime.now()
+        val members = TeamMembers()
+        val user = members.filter(_.email == author).head
+        val post = Newsletter(title,subtitle,user,body,time,mediaLink)
+        
+      }
+      Ok
     }
     catch {
       case e:Throwable => {
