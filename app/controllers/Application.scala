@@ -43,15 +43,7 @@ class Application @Inject() (
   }
   
 
-//  private def formatEvents(events:List[TEDEvent]):Html = {
-//    val articleList = events.map{article =>
-//      val title = views.html.tedTitle(article)
-//      val body = views.html.tedEventBody(article)
-//      val prettyTitle = title
-//      viewStyles.html.accordion(prettyTitle,body).toString()
-//    }
-//    new Html(articleList.mkString(""))
-//  }
+
 
   def formatEvents(events:List[TEDEvent]):Html = {
     val articleList = events.map{article =>
@@ -64,6 +56,7 @@ class Application @Inject() (
     }
     new Html(articleList.mkString(""))
   }
+  
   def sponsors = Action {
     val calendar = views.html.calendar()
     val sponsors = views.html.sponsors()
@@ -97,7 +90,15 @@ class Application @Inject() (
   }
   
   def newsfeed = Action {
-    Ok(views.html.main("News Feed",models.Newsletter.NewsfeedList))
+    val newsButton = new Html("""<a href="/"><input type="button" value="Subscribe to Newsletter"></input></a>""")
+    Ok(views.html.main("News Feed",models.Newsletter.NewsfeedList,Some(newsButton)))
+  }
+  
+  def getAPost(name:String) = Action {
+    val newsArticle = models.Newsletter.getArticle(name)
+    val post = views.html.newsArticle(newsArticle)
+    Ok(views.html.main(newsArticle.title,post,newsArticle.subtitle))
+    
   }
   
 
@@ -150,7 +151,7 @@ class Application @Inject() (
         val members = TeamMembers()
         val user = members.filter(_.email == author).head
         val post = Newsletter(title,subtitle,user,body,time,mediaLink)
-        
+        Newsletter.addNewsletter(post)
       }
       Ok
     }

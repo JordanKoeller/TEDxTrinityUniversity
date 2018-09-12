@@ -1294,6 +1294,7 @@ body, input, select, textarea {
 }
 
 a {
+	/*
 	-moz-transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out,
 		background-color 0.2s ease-in-out;
 	-webkit-transition: color 0.2s ease-in-out, border-color 0.2s
@@ -1301,15 +1302,18 @@ a {
 	-ms-transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out,
 		background-color 0.2s ease-in-out;
 	transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out,
-		background-color 0.2s ease-in-out;
+		background-color 0.2s ease-in-out;*/
 	color: #404040;
 	text-decoration: none;
-	border-bottom: dotted 1px;
+		/*
+	border-bottom: dotted 1px; */
 }
 
+/*
 a:hover {
 	border-bottom-color: transparent;
 }
+*/
 
 strong, b {
 	font-weight: 800;
@@ -1761,8 +1765,8 @@ input[type="button"], input[type="submit"], input[type="reset"], .button
 	transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out,
 		background-color 0.2s ease-in-out;
 	background: none;
-	border: solid 1px;
-	color: inherit;
+	border: solid 4px;
+	color: #e62b1e;
 	cursor: pointer;
 	display: inline-block;
 	font-size: 0.8em;
@@ -2848,3 +2852,4 @@ a .menubar {
 	margin-top: auto;
 	margin-bottom: auto;
 }
+

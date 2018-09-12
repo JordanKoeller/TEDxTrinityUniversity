@@ -1,0 +1,22 @@
+@* newsArticle Template File *@
+@(post:NewsletterPost)
+
+
+<section class="wrapper style4 container">
+	<div class="row 150%">
+			<!-- Content -->
+			<div class="content">
+				<section><img src="@post.imgURL" alt="" />
+					<header>
+						<h3>@post.title</h3>
+						<h2>@post.subtitle</h2>
+						<a href="@post.nameLinkString>
+							<h2>@post.author.name</h2>
+						</a>
+						<h2>@post.dateTime</h2>
+					</header>
+					<p>@post.description</p>
+				</section>
+			</div>
+	</div>
+</section>

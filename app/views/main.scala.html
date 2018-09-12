@@ -1,4 +1,4 @@
-@(title: String, content: Html, subtitle:Option[String]=None)
+@(title: String, content: Html, subtitle:Option[Html]=None)
 <!DOCTYPE HTML>
 <!--
 	Twenty by HTML5 UP
@@ -24,7 +24,7 @@
 					<ul>
 						
 						<li><a class="menuitem" href="/AboutTED">About TED</a></li>
-						<li><a class="menuitem" href="/Events">Newsletter</a></li>
+						<li><a class="menuitem" href="/Feed">Newsletter</a></li>
 						<li><a class="menuitem" href="/Sponsors">Sponsors</a></li>
 						<li><a class="menuitem" href="/Contact">Contact Us</a></li>
 					</ul>
@@ -34,7 +34,7 @@
 				<!-- <span class="icon fa-laptop"></span> -->
 				<h3>@title</h3>
 				@if(subtitle.isDefined) {
-				<p>@subtitle.get</p>
+				@subtitle.get
 				}
 			</header>
 			@*@menubar*@

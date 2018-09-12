@@ -28,8 +28,25 @@ class NewsletterPost(
     s"$hrString:$minString $amPm"
   }
   
+  def dateTime:String = {
+    val day = date.getDayOfMonth
+    val month = date.getMonthValue
+    val yr = date.getYear
+    s"$month/$day/$yr" + " | " + time
+  }
+  
   def nameLinkString:String = {
     routes.Application.contact2().url + "#"+author.emailName
+  }
+  
+  def articleLinkString:String = {
+    val cleaned = title.filter(c => Newsletter.alphabet.contains(c)).mkString("")
+    cleaned.split(" ").mkString("_")
+  }
+  
+  def article:Html = {
+    
+    ???
   }
 
 
@@ -39,6 +56,7 @@ class NewsletterPost(
 object Newsletter {
   
   private val posts = collection.mutable.ArrayBuffer[NewsletterPost]()
+  val alphabet = """ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz """
   
   def apply(title:String,
       subtitle:String,
@@ -51,7 +69,7 @@ object Newsletter {
   }
 
   def NewsfeedList = {
-    val newslist: List[NewsletterPost] = posts.toList
+    val newslist: List[NewsletterPost] = news1 :: Nil//posts.toList
 
     val titles = newslist.map { article =>
       val article2 = Article("", "",None, Some(article.imgURL))
@@ -64,7 +82,13 @@ object Newsletter {
 
   }
   
+  def getArticle(name:String):NewsletterPost = {
+    val post = posts.filter(_.title == name)
+    post(0)
+  }
+  
   def addNewsletter(letter:NewsletterPost) = {
+    println("Added Newsleter")
     posts.append(letter)
   }
   
