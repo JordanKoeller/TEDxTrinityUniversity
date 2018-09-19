@@ -40,8 +40,22 @@ class NewsletterPost(
   }
   
   def articleLinkString:String = {
-    val cleaned = title.filter(c => Newsletter.alphabet.contains(c)).mkString("")
-    cleaned.split(" ").mkString("_")
+    println(title)
+//    title.toCharArray().filter{p=>
+//      Newsletter.alphabet.contains(p)
+//    }
+    val cleaned = title.toCharArray().filter{c =>
+      var found = false
+      for (cc <- Newsletter.alphabet.toCharArray()) {
+        if (cc == c) found = true
+      }
+      found
+    }.mkString("")
+//    println(cleaned)
+//    val ret = cleaned.split(" ").mkString("_")
+    println(cleaned)
+    cleaned
+//    title
   }
   
   def article:Html = {
@@ -56,7 +70,7 @@ class NewsletterPost(
 object Newsletter {
   
   private val posts = collection.mutable.ArrayBuffer[NewsletterPost]()
-  val alphabet = """ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz """
+  val alphabet = """ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"""
   
   def apply(title:String,
       subtitle:String,
@@ -74,17 +88,18 @@ object Newsletter {
     val titles = newslist.map { article =>
       val article2 = Article("", "",None, Some(article.imgURL))
       val article1 = Article(article.title, article.subtitle.get,Some(article.author.name))
-      val articleLink = article.nameLinkString
+      val articleLink = "Feed/"+article.articleLinkString
       viewStyles.html.splitStyle(article2, article1, link = Some(articleLink))
     }
+    println("Right!?")
     
     titles.mkString("")
 
   }
   
   def getArticle(name:String):NewsletterPost = {
-    val post = posts.filter(_.title == name)
-    post(0)
+    val post = posts.filter(_.articleLinkString == name)
+    post.head
   }
   
   def addNewsletter(letter:NewsletterPost) = {
@@ -99,5 +114,5 @@ object Newsletter {
       "This is a sample web post, supposed to be by Jordan Koeller",
       java.time.LocalDateTime.now(java.time.Clock.systemUTC()),
       "https://i.pinimg.com/736x/f5/df/ff/f5dfffc707db37ceaaad9c5c7018bdcd--artsy-pics-john-green.jpg")
-  
+  posts.+=(news1)
 }
