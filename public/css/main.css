@@ -2853,3 +2853,14 @@ a .menubar {
 	margin-bottom: auto;
 }
 
+#centeredWide {
+	display: block;
+	padding-left: 10%;
+	padding-right: 10%;
+	margin-left: auto;
+	margin-right: auto;
+	width: 80%;
+	max-width: 600px;
+	/*max-width: 400px;*/
+}
+

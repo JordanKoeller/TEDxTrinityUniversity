@@ -58,11 +58,11 @@ class Application @Inject() (
   }
   
   def sponsors = Action {
-    val calendar = views.html.calendar()
+//    val calendar = views.html.calendar()
     val sponsors = views.html.sponsors()
-    val sponsorsIcon = "TULogo.png"
-    val prettySponsors = viewStyles.html.style1(Article("<a href=\"https://new.trinity.edu\">Trinity University</a>","",image=Some(sponsorsIcon)))
-    Ok(views.html.main("Sponsors", prettySponsors))
+//    val sponsorsIcon = "TULogo.png"
+//    val prettySponsors = viewStyles.html.style1(Article("<a href=\"https://new.trinity.edu\">Trinity University</a>","",image=Some(sponsorsIcon)))
+    Ok(views.html.main("Sponsors", sponsors))
   }
 
   def aboutTED = Action {
