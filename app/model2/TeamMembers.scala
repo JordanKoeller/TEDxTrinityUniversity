@@ -1,4 +1,4 @@
-package models
+package model2
 
 case class TeamMember(name:String,year:String, major:String, email:String, role:String, description:String,imgLink:String) {
   def classDescription:String = major + ", Class of " + year  + " <br> " + email

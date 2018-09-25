@@ -1,6 +1,7 @@
 package models
 
 import java.time.LocalDateTime
+import model2.TeamMember
 
 trait Post {
 

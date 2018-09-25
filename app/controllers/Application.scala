@@ -12,7 +12,7 @@ import models.TEDEvent
 import models.TEDEventList
 import models.Tables.EventDescriptions
 import models.Tables.EventDescriptionsRow
-import models.TeamMembers
+import model2.TeamMembers
 import play.api.db.slick.DatabaseConfigProvider
 import play.api.db.slick.HasDatabaseConfigProvider
 import play.api.mvc._
@@ -189,7 +189,7 @@ class Application @Inject() (
         id,
         event.title,
         event.subtitle,
-        event.speaker,
+        event.speakers.mkString(","),
         event.description,
         event.venue,
         sqldate,

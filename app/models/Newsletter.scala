@@ -5,10 +5,11 @@ import java.time.LocalDateTime
 import controllers.routes
 import play.twirl.api.Html
 
-import models.TeamMembers.WebCoordinator
+import model2.TeamMembers.WebCoordinator
 
 import util.Article
 import util._
+import model2.TeamMember
 
 class NewsletterPost(
   val title: String,

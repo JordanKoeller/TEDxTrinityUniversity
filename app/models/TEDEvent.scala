@@ -3,12 +3,16 @@ package models
 import java.time.LocalDateTime
 import java.time.format.TextStyle
 import java.util.Locale
+import model2.TeamMembers
+import model2.TeamMember
+
+case class Speaker(name:String, bio:String)
 
 class TEDEvent(
   val title: String,
   val subtitle: Option[String],
   val date: LocalDateTime,
-  val speaker: String,
+  val speakers: Seq[Speaker],
   val venue: String,
   val maxSeats: Int,
   val description: String,
@@ -53,7 +57,7 @@ object TEDEvent {
     year: Int,
     hr: Int,
     min: Int,
-    speaker: String,
+    speakers:Seq[Speaker],
     venue: String,
     maxSeats: Int,
     description: String,
@@ -61,13 +65,18 @@ object TEDEvent {
     val date = LocalDateTime.of(year, month, day, hr, min)
     val st = if (subtitle != "") Some(subtitle) else None
     val im = if (imgURL != "") Some(imgURL) else None
-    new TEDEvent(title, st, date, speaker, venue, maxSeats, description, im)
+//    val speakers = speakerss.split(",")
+//    val speaks = speakers.map{s =>
+//      val splitted = s.split(":")
+//      Speaker(splitted.head,splitted.last)
+//    }
+    new TEDEvent(title, st, date, speakers, venue, maxSeats, description, im)
   }
 
   def apply(
     title: String,
     subtitle: String,
-    speaker: String,
+    speakers: String,
     desc: String,
     venue: String,
     date: String,
@@ -81,13 +90,17 @@ object TEDEvent {
     val timeSplit = time.split(":")
     val hr = timeSplit(0).toInt
     val min = timeSplit(1).toInt
-    TEDEvent(title, subtitle, day, month, yr, hr, min, speaker, venue, seats.toInt, desc, link)
+    val speaks = speakers.map{s =>
+//      val splitted = s.split(":")
+      Speaker("Title","Body")
+    }
+    TEDEvent(title, subtitle, day, month, yr, hr, min, speaks.toSeq, venue, seats.toInt, desc, link)
   }
   
   def unapply(tev:TEDEvent) = {
     Some(tev.title,
         tev.subtitle.getOrElse(""),
-        tev.speaker,
+        tev.speakers.mkString(","),
         tev.description,
         tev.venue,
         tev.dateNumberString("/"),

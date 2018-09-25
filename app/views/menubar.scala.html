@@ -7,25 +7,25 @@
 			<h1 id="logo"><a href="/"><img src="@routes.Assets.versioned("images/TEDxTrinityLogo.png")" alt="TEDxTrinity"/></a></h1>
 		</li>
 		@for(ind <- 0 until navOpts.length) {
-		@if(ind == currInd) {<li class="current"><a href="@navOpts(ind)._1">@navOpts(ind)._2</a></li>}
-		@if(ind != currInd) {<li><a href="@navOpts(ind)._1">@navOpts(ind)._2</a></li>}
-		}
-		<li>
-			<section class="box search">
-				<form method="post" action="#">
-					<input type="text" class="text" name="search" placeholder="Search" />
-				</form>
-			</section>
-		</li>
+											       @if(ind == currInd) {<li class="current"><a href="@navOpts(ind)._1">@navOpts(ind)._2</a></li>}
+											       @if(ind != currInd) {<li><a href="@navOpts(ind)._1">@navOpts(ind)._2</a></li>}
+											       }
+											       <li>
+												       <section class="box search">
+													       <form method="post" action="#">
+														       <input type="text" class="text" name="search" placeholder="Search" />
+													       </form>
+												       </section>
+											       </li>
 	</ul>
 </nav>
 <div id="sidebar">
 	<section class="box text-style1">
 		<div class="inner">
 			<p>
-				This independent TEDx event is operated under license from TED.
-				<br/>
-				<a href="https://www.ted.com/about/programs-initiatives/tedx-program">TEDx Program</a>
+			This independent TEDx event is operated under license from TED.
+			<br/>
+			<a href="https://www.ted.com/about/programs-initiatives/tedx-program">TEDx Program</a>
 			</p>
 		</div>
 	</section>

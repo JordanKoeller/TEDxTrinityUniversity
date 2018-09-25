@@ -67,6 +67,14 @@ Note: The date should be formatted exactly as it's shown below. In particular, t
 							<li class="logisticEntry">
 								<strong>Seats:</strong> @model.numAttendants / @model.maxSeats
 							</li>
+							<li class="logisticEntry">
+								<strong>Speakers:</strong>
+							</li>
+							@for(speaker <- model.speakers) {
+							<li class="logisticEntry">
+								@speaker.name
+							</li>
+								}
 							</ul>
 						<footer>
 							<ul class="buttons">
@@ -86,7 +94,7 @@ Note: The date should be formatted exactly as it's shown below. In particular, t
 						<header>
 							<h3>@model.title</h3>
 						</header>
-						<p><strong>Speakers:</strong><br>@model.speaker </p>
+						@*<p><strong>Speakers:</strong><br>@model.speaker </p> *@
 						<p><strong>Description:</strong><br>@model.description</p>
 					</section>
 				</div>

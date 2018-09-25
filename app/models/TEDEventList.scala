@@ -22,7 +22,7 @@ object TEDEventList {
           dateTime.getYear,
           dateTime.getHour,
           dateTime.getMinute,
-          eventRow.speaker,
+          Seq[Speaker](),
           eventRow.venue,
           eventRow.maxSeats,
           eventRow.description,

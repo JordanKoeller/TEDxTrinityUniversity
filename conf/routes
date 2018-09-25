@@ -14,9 +14,7 @@ GET        /Contact						 controllers.Application.contact2
 POST       /submitEventForm    			 controllers.Application.postEvent
 POST       /submitNewsletter             controllers.Application.postNewsfeed
 
-POST		/TestSubmission				 controllers.Test.postEvent
 
-GET        /Test                         controllers.Test.index
 # Prefix must match `play.assets.urlPrefix`
 
 GET        /assets/*file                 controllers.Assets.at(file)
