@@ -5,31 +5,32 @@ CREATE TABLE event (
     subtitle varchar(1000),
     description text NOT NULL,
     venue varchar(1000) NOT NULL,
-    date date NOT NULL,
+    event_date date NOT NULL,
     time time NOT NULL,
     max_seats int NOT NULL,
     taken_seats int NOT NULL,
     registration_link varchar(1000) NOT NULL,
     media_link varchar(1000),
-    PRIMARY KEY (event_id)
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE posters (
     id int NOT NULL,
     name varchar(100) NOT NULL,
     email varchar(40) NOT NULL,
-    PRIMARY KEY (user_id)
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE newsletter_post (
     id int NOT NULL,
-    date date NOT NULL,
+    post_date date NOT NULL,
     description text NOT NULL,
     user_id int NOT NULL,
     title varchar(1000) NOT NULL,
     subtitle varchar(1000) NOT NULL,
     abstract varchar(1000) NOT NULL,
-    media_link varchar(1000)    
+    media_link varchar(1000),
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE speakers (
@@ -51,6 +52,7 @@ CREATE TABLE team_member (
     biography text NOT NULL,
     email varchar(1000) NOT NULL,
     media_url varchar(1000) NOT NULL
+    PRIMARY KEY (id)
 );
 
 
