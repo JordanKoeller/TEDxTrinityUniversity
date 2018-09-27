@@ -1,21 +1,13 @@
-package models
+package model2
 
 import java.time.LocalDateTime
-import model2.TeamMember
 
-trait Post {
+abstract class WithID(val id:Int)
 
-  val title: String
-  val subtitle: Option[String]
-  val author: TeamMember
-  val description: String
-  val date: LocalDateTime
+abstract class Post(val date:java.sql.Date, val time:java.sql.Time, override val id:Int)  extends  WithID(id) with Serializable {
 
   def dayOfWeek: String = {
-
-
-
-    val dayNum = date.getDayOfWeek.getValue
+    val dayNum = date.toLocalDate.getDayOfWeek.getValue()
     dayNum match {
       case 1 => "Monday"
       case 2 => "Tuesday"
@@ -27,15 +19,25 @@ trait Post {
     }
   }
 
+  def timeString:String = {
+    val hr = time.toLocalTime.getHour()
+    val min = time.toLocalTime.getMinute()
+    val hrFormatted = hr % 12
+    val amPm = if (hr >= 12) "PM" else "AM"
+    val minString = if (min < 10) "0" + min else min
+    val hrString = if (hrFormatted == 0) "12" else hrFormatted
+    s"$hrString:$minString $amPm"
+  }
+
   def dateNumberString(delimiter: String = "/"): String = {
-    val month = date.getMonth.getValue
-    val day = date.getDayOfMonth
-    val year = date.getYear
+    val month = date.toLocalDate.getMonth.getValue()
+    val day = date.toLocalDate.getDayOfMonth()
+    val year = date.toLocalDate.getYear()
     month + delimiter + day + delimiter + year
   }
 
   def monthSuffix: String = {
-    val month = date.getMonth.getValue
+    val month = date.toLocalDate.getMonth.getValue()
     month match {
       case 1 => "uary"
       case 2 => "ruary"
@@ -54,7 +56,7 @@ trait Post {
   }
 
   def monthPrefix: String = {
-    val month = date.getMonth.getValue
+    val month = date.toLocalDate.getMonth.getValue()
     month match {
       case 1 => "Jan"
       case 2 => "Feb"
