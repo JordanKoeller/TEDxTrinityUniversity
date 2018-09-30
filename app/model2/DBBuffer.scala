@@ -1,7 +1,7 @@
 package model2
 
-import Tables.EventRow
-import scala.reflect.{ClassTag, classTag}
+
+import scala.reflect.ClassTag
 
 //case class WithID(id:Int)
 
@@ -9,7 +9,7 @@ class DBBuffer[T <: WithID:ClassTag] {
 
   private val buff = collection.mutable.ArrayBuffer[T]()
 
-  def updateBuffer(items:Array[T]) = {
+  def updateBuffer(items:Array[T]):Unit = {
     buff ++= items
   }
 
@@ -22,3 +22,22 @@ class DBBuffer[T <: WithID:ClassTag] {
   }
 
 }
+
+//class DBBuffer[E <: AbstractTable[_]](tq:TableQuery[E]) {
+//
+//  type Row = tq.baseTableRow.TableElementType
+//
+//  private val buff = collection.mutable.ArrayBuffer[Row]()
+//
+//  def updateBuffer(items:Array[Row]) = {
+//    buff ++= items
+//  }
+//
+//  def items:Array[Row] = {
+//    buff.toArray
+//  }
+//
+//  def getEvent(id:Int):Row = {
+//    items.filter(_.id == id).head
+//  }
+//}

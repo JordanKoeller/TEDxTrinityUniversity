@@ -9,9 +9,9 @@ libraryDependencies += "org.postgresql" % "postgresql" % "9.4-1201-jdbc41"
 // Sbt plugins
 addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.6.6")
 
-addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.20")
+//addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.20")
 
-addSbtPlugin("com.vmunier" % "sbt-web-scalajs" % "1.0.6")
+//addSbtPlugin("com.vmunier" % "sbt-web-scalajs" % "1.0.6")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-gzip" % "1.0.2")
 

@@ -68,12 +68,21 @@ class Application @Inject() (
     Ok(views.html.main(title,body))
   }
 
-  def ourTeam = Action {
-    val teamMembers = teamDBBuffer.items
-    val tiles = teamMembers.foldLeft(new Html("")){(old:Html,member:TeamMemberRow) =>
-      new Html(old.body + viewstyles.html.namecard(member).body)
+  def ourTeam = Action.async {
+    val members = db.run(TeamMember.filter(_.isActive === 1).result)
+    members.map{ret =>
+      val page = ret.seq.foldLeft(new Html("")){(old:Html,member:TeamMemberRow) =>
+        new Html(old.body + viewstyles.html.namecard(member))
+      }
+      Ok(views.html.main("Our Team",page))
     }
-    Ok(views.html.main("Our Team",tiles))
+//    Ok
+//    members.map{returned =>
+//      val tiles = teamMembers.foldLeft(new Html("")){(old:Html,member:TeamMemberRow) =>
+//        new Html(old.body + viewstyles.html.namecard(member).body)
+//      }
+//      Ok(views.html.main("Our Team",tiles))
+//    }
   }
 
   def aboutTed = Action {
