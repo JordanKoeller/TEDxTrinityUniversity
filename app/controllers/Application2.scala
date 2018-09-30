@@ -54,7 +54,7 @@ class Application @Inject() (
     println("Parsed the member")
     val query = db.run(TeamMember += member)
     query.map{id =>
-      println("Finisheed adding team member")
+      println("Finished adding team member")
     }
     Ok
   }
@@ -76,13 +76,6 @@ class Application @Inject() (
       }
       Ok(views.html.main("Our Team",page))
     }
-//    Ok
-//    members.map{returned =>
-//      val tiles = teamMembers.foldLeft(new Html("")){(old:Html,member:TeamMemberRow) =>
-//        new Html(old.body + viewstyles.html.namecard(member).body)
-//      }
-//      Ok(views.html.main("Our Team",tiles))
-//    }
   }
 
   def aboutTed = Action {
