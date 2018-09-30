@@ -76,6 +76,7 @@ class FormAccepter(profile: JdbcProfile) {
         TeamMemberRow(0,1,item.name,item.position,item.major,item.year,item.bio,item.email,imgName)
       case e: JsError =>
         println("Couldn't construct team member")
+        println(e.toString())
         null
     }
   }
