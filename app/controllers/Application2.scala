@@ -19,29 +19,29 @@ import model2.DBBuffer
 
 @Singleton
 class Application @Inject() (
-  protected val dbConfigProvider: DatabaseConfigProvider,
-  cc: ControllerComponents)(implicit ec: ExecutionContext)
+                              protected val dbConfigProvider: DatabaseConfigProvider,
+                              cc: ControllerComponents)(implicit ec: ExecutionContext)
   extends AbstractController(cc) with HasDatabaseConfigProvider[JdbcProfile] {
 
   import profile.api._
-  
+
   private val formAccepter = new FormAccepter(profile)
   private val eventDBBuffer = new DBBuffer[EventRow]()
   private val teamDBBuffer = new DBBuffer[TeamMemberRow]()
 
   def addEventToDB = Action { request =>
-//    try {
-      println("Received ping to add an event to db")
-      val event = request.body.asJson
-      val tableRow = formAccepter.parseEvent(event.get)
+    //    try {
+    println("Received ping to add an event to db")
+    val event = request.body.asJson
+    val tableRow = formAccepter.parseEvent(event.get)
     val speakers = formAccepter.parseSpeakers(event.get,tableRow.id)
-      println("Constructed Row")
-      val query = db.run(Event += tableRow)
+    println("Constructed Row")
+    val query = db.run(Event += tableRow)
     val speakerQuery = db.run(Speakers ++= speakers.toIterable)
-      println("Passed ddb.run")
-      query.map{id =>
-        println("Query update returned " + id)
-      }
+    println("Passed ddb.run")
+    query.map{id =>
+      println("Query update returned " + id)
+    }
     speakerQuery.map{id =>
       println("Finished adding speakers")
     }
@@ -68,15 +68,24 @@ class Application @Inject() (
     Ok(views.html.main(title,body))
   }
 
-def ourTeam = Action {
-  val teamMembers = teamDBBuffer.items
-  val tiles = teamMembers.foldLeft(new Html("")){(old:Html,member:TeamMemberRow) =>
-    new Html(old.body + viewstyles.html.namecard(member).body)
+  def ourTeam = Action {
+    val teamMembers = teamDBBuffer.items
+    val tiles = teamMembers.foldLeft(new Html("")){(old:Html,member:TeamMemberRow) =>
+      new Html(old.body + viewstyles.html.namecard(member).body)
+    }
+    Ok(views.html.main("Our Team",tiles))
   }
-  Ok(views.html.main("Our Team",tiles))
 
-
-}
-  
-  
+  def aboutTed = Action {
+    val content = views.html.aboutTed()
+    Ok(views.html.main("About Ted",content))
+  }
+//
+//  def upcomingEvents = Action {
+//    val events = eventDBBuffer.items
+//    val posts = events.foldLeft(new Html("")){ (old,dbEntry) =>
+//      new Html(old.body + views.html.postCard(dbEntry))
+//    }
+//      Ok(views.html.main("Upcoming Events",posts))
+//  }
 }

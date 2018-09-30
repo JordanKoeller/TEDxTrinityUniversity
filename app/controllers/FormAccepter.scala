@@ -15,7 +15,7 @@ class FormAccepter(profile: JdbcProfile) {
   sealed case class EventJSMapper(title:String, subtitle:String, description:String, venue:String,date:String,time:String,numSeats:Int,mediaLink:Option[String])
   sealed case class SpeakerJSMapper(name:String, bio:String)
   sealed case class SpeakerSeqMapper(speakers:Seq[SpeakerJSMapper])
-  sealed case class TeamMemberConverter(id:Int,isActive:Int,name:String,position:String,major:String,gradClass:Int,biography:String,email:String,mediaUrl:String)
+  sealed case class TeamMemberConverter(name:String,position:String,major:String,year:Int,bio:String,email:String)
   implicit val eventConverter = Json.reads[EventJSMapper]
   implicit val speakerConverter = Json.reads[SpeakerJSMapper]
   implicit val speakerCol = Json.reads[SpeakerSeqMapper]
@@ -71,7 +71,9 @@ class FormAccepter(profile: JdbcProfile) {
     val jsMapper:JsResult[TeamMemberConverter] = Json.fromJson[TeamMemberConverter](js)
     jsMapper match {
       case JsSuccess(item:TeamMemberConverter,path:JsPath) =>
-        TeamMemberRow(item.id,item.isActive,item.name,item.position,item.major,item.gradClass,item.biography,item.email,item.mediaUrl)
+        val emailHead = item.email.split("@").head
+        val imgName = "assets/images/members/" + emailHead + ".png"
+        TeamMemberRow(0,1,item.name,item.position,item.major,item.year,item.bio,item.email,imgName)
       case e: JsError =>
         println("Couldn't construct team member")
         null
