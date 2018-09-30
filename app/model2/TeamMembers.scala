@@ -31,7 +31,7 @@ object TeamMembers {
       "dpatel2@trinity.edu",
       "Financial Coordinator",
       """Devon is a first year student from Las Vegas, Nevada. He intends to major in Neuroscience and minor in Spanish. He aspires to become a neuroradiologist. Outside of TEDxTrinityUniversity, Devon is involved in the Trinity University Chess Club and the First Time Offenders Improv Comedy Troupe. Some of his hobbies include martial arts (he is a second degree black belt in shotokan karate) and cooking/baking. As Financial Coordinator of TEDxTrinityUniversity, Devon is responsible for creating the event budget, ensuring all purchases are in accordance with Trinity University and TEDx policies, and presenting at Student Government Association budget meetings.""",
-      "assets/images/devon_patel.png"
+      "assets/images/jkoeller.png"
       )
       
   val DesignCoordinator = TeamMember(
