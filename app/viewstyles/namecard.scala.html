@@ -9,7 +9,7 @@
                     <header>
                         <h3>@person.position</h3>
                     </header>
-                    @if(person.mediaUrl != "") { <a href="@person.mediaUrl" class="image featured"><img
+                    @if(person.mediaUrl != "") { <a href="mailto:@person.mediaUrl" class="image featured"><img
                     src="@person.mediaUrl" alt="" /></a> }
                 </section>
             </div>
@@ -19,7 +19,7 @@
                     <section>
                         <header>
                             <h3>@person.name</h3>
-                                Class of <p>@person.gradClass <br> <a href="@person.email">@person.email</a></p>
+                                <p> Class of @person.gradClass <br> <a href="mailto:@person.email">@person.email</a></p>
                         </header>
                         @person.biography
                     </section>
