@@ -43,7 +43,7 @@ class FormAccepter(profile: JdbcProfile) {
         val sqltime = new Time(epochsec)
         val regLink = "#"
         val takenSeats = 0
-        val id = 0
+        val id = 1
         val subOpt = if (item.subtitle != "") Some(item.subtitle) else None
         EventRow(id,item.title,subOpt,item.description,item.venue,sqldate,sqltime,item.numSeats.toInt,takenSeats,regLink,item.mediaLink)
       case e: JsError =>
@@ -58,7 +58,7 @@ class FormAccepter(profile: JdbcProfile) {
     val jsMapper:JsResult[Seq[SpeakerJSMapper]] = Json.fromJson[Seq[SpeakerJSMapper]](js)
     jsMapper match {
       case JsSuccess(item:Seq[SpeakerJSMapper],path:JsPath) =>
-        val tmpId = 0
+        val tmpId = 1
         val media = ""
         item.map{ elem =>
           SpeakersRow(tmpId,eventID,elem.name,elem.bio,media)
