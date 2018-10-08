@@ -45,8 +45,7 @@ class Application @Inject() (
       println("Query update returned " + id)
       val speakers = formAccepter.parseSpeakers((event \ "speakers").get,id)
       val speakerAction = Speakers ++= speakers
-      speakerAction.statements foreach println
-      val speakerQuery = db.run(Speakers ++= speakers.toIterable)
+      val speakerQuery = db.run(speakerAction)
       speakerQuery.map{id2 =>
         println("Finished adding  " + id2 + "speakers")
       }

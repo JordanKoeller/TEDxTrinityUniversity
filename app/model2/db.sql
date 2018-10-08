@@ -1,6 +1,6 @@
 
 CREATE TABLE event (
-    id int NOT NULL,
+    id SERIAL NOT NULL,
     title varchar(1000) NOT NULL,
     subtitle varchar(1000),
     description text NOT NULL,
@@ -15,14 +15,14 @@ CREATE TABLE event (
 );
 
 CREATE TABLE posters (
-    id int NOT NULL,
+    id SERIAL NOT NULL,
     name varchar(100) NOT NULL,
     email varchar(40) NOT NULL,
     PRIMARY KEY (id)
 );
 
 CREATE TABLE newsletter_post (
-    id int NOT NULL,
+    id SERIAL NOT NULL,
     post_date date NOT NULL,
     description text NOT NULL,
     user_id int NOT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE newsletter_post (
 );
 
 CREATE TABLE speakers (
-    speaker_id int NOT NULL,
+    speaker_id SERIAL NOT NULL,
     event_id int NOT NULL,
     name varchar(1000) NOT NULL,
     bio text NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE speakers (
 );
 
 CREATE TABLE team_member (
-    id int NOT NULL,
+    id SERIAL NOT NULL,
     is_active int NOT NULL,
     name varchar(1000) NOT NULL,
     position varchar(1000) NOT NULL,
@@ -51,7 +51,7 @@ CREATE TABLE team_member (
     grad_class int NOT NULL,
     biography text NOT NULL,
     email varchar(1000) NOT NULL,
-    media_url varchar(1000) NOT NULL
+    media_url varchar(1000) NOT NULL,
     PRIMARY KEY (id)
 );
 
