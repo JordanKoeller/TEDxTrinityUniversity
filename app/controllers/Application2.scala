@@ -1,17 +1,14 @@
 package controllers
 
-import scala.concurrent.ExecutionContext
-
+import scala.concurrent.{ExecutionContext, Future}
 import javax.inject._
 import play.api.mvc._
-
 import play.api.db.slick.DatabaseConfigProvider
 import play.api.db.slick.HasDatabaseConfigProvider
 import play.api.mvc.AbstractController
 import play.api.mvc.ControllerComponents
 import slick.jdbc.JdbcProfile
 import play.twirl.api.Html
-
 import model2.Tables._
 
 
@@ -34,7 +31,9 @@ class Application @Inject() (
     val event = request.body.asJson.get
     val tableRow = formAccepter.parseEvent((event \ "event").get)
     val speakers = formAccepter.parseSpeakers((event \ "speakers").get,tableRow.id)
+    speakers foreach println
     println("Constructed Row")
+    println(tableRow)
     val query = db.run(Event += tableRow)
     val speakerQuery = db.run(Speakers ++= speakers.toIterable)
     println("Passed ddb.run")
@@ -83,19 +82,26 @@ class Application @Inject() (
   }
 //
   def upcomingEvent = Action.async {
-//    val tmp_post = EventRow(12,"This is the title",Some("This is the subtitle"),
-//    "This is the body of the event.","Steiren",null,null,12,10,"This is the link",Some("assets/images/banner.jpg"))
-//    val eventPg = viewstyles.html.event(tmp_post)
-    val id = 0
-    val event = db.run(Event.filter(_.id === id).result)
-    event.map{e =>
-      val item = e.seq.head
-      val eventID = item.id
-      val speakers = db.run(Speakers.filter(_.eventId === eventID).result)
-      speakers.map{speakerSeq =>
-        val page = viewstyles.html.event(item,speakerSeq)
-        Ok(views.html.main("Upcoming Event",page))
+    //    val tmp_post = EventRow(12,"This is the title",Some("This is the subtitle"),
+    //    "This is the body of the event.","Steiren",null,null,12,10,"This is the link",Some("assets/images/banner.jpg"))
+    //    val eventPg = viewstyles.html.event(tmp_post)
+    try {
+      val id = 0
+      val event = db.run(Event.filter(_.id === id).result)
+      event.map { e =>
+        val item = e.seq.head
+        val eventID = item.id
+        val speakers = db.run(Speakers.filter(_.eventId === eventID).result)
+        speakers.map { speakerSeq =>
+          val page = viewstyles.html.event(item, speakerSeq)
+          Ok(views.html.main("Upcoming Event", page))
+        }
+      }.flatten
+    }
+    catch {
+      case e: java.lang.UnsupportedOperationException => Future {
+        Ok(views.html.main("No Upcoming Events", new Html("")))
       }
-    }.flatten
+    }
   }
 }

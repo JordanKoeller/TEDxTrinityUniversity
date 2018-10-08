@@ -12,7 +12,7 @@ import model2.Tables._
 
 class FormAccepter(profile: JdbcProfile) {
 
-  sealed case class EventJSMapper(title:String, subtitle:String, description:String, venue:String,date:String,time:String,numSeats:Int,mediaLink:Option[String])
+  sealed case class EventJSMapper(title:String, subtitle:String, description:String, venue:String,date:String,time:String,numSeats:String,mediaLink:Option[String])
   sealed case class SpeakerJSMapper(name:String, bio:String)
   sealed case class SpeakerSeqMapper(speakers:Seq[SpeakerJSMapper])
   sealed case class TeamMemberConverter(name:String,position:String,major:String,year:Int,bio:String,email:String)
@@ -36,22 +36,25 @@ class FormAccepter(profile: JdbcProfile) {
         val hr = timeSplit(0).toInt
         val min = timeSplit(1).toInt
         val dateTime = LocalDateTime.of(year,month,day,hr,min)
+        val epochsec = dateTime.atZone(ZoneId.of("America/Chicago")).getLong(ChronoField.INSTANT_SECONDS) * 1000
         //        val date = event.date.atZone(ZoneId.of("America/Chicago"))
-        val epochsec = dateTime.getLong(ChronoField.INSTANT_SECONDS) * 1000
+//        val epochsec = dateTime.getLong(ChronoField.INSTANT_SECONDS) * 1000
         val sqldate = new Date(epochsec)
         val sqltime = new Time(epochsec)
         val regLink = "#"
         val takenSeats = 0
         val id = 0
         val subOpt = if (item.subtitle != "") Some(item.subtitle) else None
-        EventRow(id,item.title,subOpt,item.description,item.venue,sqldate,sqltime,item.numSeats,takenSeats,regLink,item.mediaLink)
+        EventRow(id,item.title,subOpt,item.description,item.venue,sqldate,sqltime,item.numSeats.toInt,takenSeats,regLink,item.mediaLink)
       case e: JsError =>
         println("Failed to construct JSValue currectly.")
+        println("FAILED ON THE ERROR " + e.toString)
         null
     }
   }
 
   def parseSpeakers(js:JsValue,eventID:Int):Array[SpeakersRow] = {
+//    val list = js.as[List[SpeakerJSMapper]]
     val jsMapper:JsResult[Seq[SpeakerJSMapper]] = Json.fromJson[Seq[SpeakerJSMapper]](js)
     jsMapper match {
       case JsSuccess(item:Seq[SpeakerJSMapper],path:JsPath) =>
