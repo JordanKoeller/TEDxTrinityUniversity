@@ -72,4 +72,9 @@ abstract class Post(val date:java.sql.Date, val time:java.sql.Time, override val
       case 12 => "Dec"
     }
   }
+
+  def dateString:String = {
+    val m = monthPrefix+monthSuffix
+    dayOfWeek + ", " + m +" " + date.toLocalDate.getDayOfMonth + " " +  date.toLocalDate.getYear
+  }
 }

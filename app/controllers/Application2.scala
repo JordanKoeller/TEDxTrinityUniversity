@@ -13,7 +13,6 @@ import slick.jdbc.JdbcProfile
 import play.twirl.api.Html
 
 import model2.Tables._
-import model2.DBBuffer
 
 
 
@@ -26,8 +25,8 @@ class Application @Inject() (
   import profile.api._
 
   private val formAccepter = new FormAccepter(profile)
-  private val eventDBBuffer = new DBBuffer[EventRow]()
-  private val teamDBBuffer = new DBBuffer[TeamMemberRow]()
+//  private val eventDBBuffer = new DBBuffer[EventRow]()
+//  private val teamDBBuffer = new DBBuffer[TeamMemberRow]()
 
   def addEventToDB = Action { request =>
     //    try {
@@ -83,11 +82,20 @@ class Application @Inject() (
     Ok(views.html.main("About Ted",content))
   }
 //
-//  def upcomingEvents = Action {
-//    val events = eventDBBuffer.items
-//    val posts = events.foldLeft(new Html("")){ (old,dbEntry) =>
-//      new Html(old.body + views.html.postCard(dbEntry))
-//    }
-//      Ok(views.html.main("Upcoming Events",posts))
-//  }
+  def upcomingEvent = Action.async {
+//    val tmp_post = EventRow(12,"This is the title",Some("This is the subtitle"),
+//    "This is the body of the event.","Steiren",null,null,12,10,"This is the link",Some("assets/images/banner.jpg"))
+//    val eventPg = viewstyles.html.event(tmp_post)
+    val id = 0
+    val event = db.run(Event.filter(_.id === id).result)
+    event.map{e =>
+      val item = e.seq.head
+      val eventID = item.id
+      val speakers = db.run(Speakers.filter(_.eventId === eventID).result)
+      speakers.map{speakerSeq =>
+        val page = viewstyles.html.event(item,speakerSeq)
+        Ok(views.html.main("Upcoming Event",page))
+      }
+    }.flatten
+  }
 }
