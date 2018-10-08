@@ -43,7 +43,7 @@ class FormAccepter(profile: JdbcProfile) {
         val sqltime = new Time(epochsec)
         val regLink = "#"
         val takenSeats = 0
-        val id = 1
+        val id = 2
         val subOpt = if (item.subtitle != "") Some(item.subtitle) else None
         EventRow(id,item.title,subOpt,item.description,item.venue,sqldate,sqltime,item.numSeats.toInt,takenSeats,regLink,item.mediaLink)
       case e: JsError =>
@@ -58,7 +58,7 @@ class FormAccepter(profile: JdbcProfile) {
     val jsMapper:JsResult[Seq[SpeakerJSMapper]] = Json.fromJson[Seq[SpeakerJSMapper]](js)
     jsMapper match {
       case JsSuccess(item:Seq[SpeakerJSMapper],path:JsPath) =>
-        val tmpId = 1
+        val tmpId = 3
         val media = ""
         item.map{ elem =>
           SpeakersRow(tmpId,eventID,elem.name,elem.bio,media)
@@ -77,7 +77,7 @@ class FormAccepter(profile: JdbcProfile) {
       case JsSuccess(item:TeamMemberConverter,path:JsPath) =>
         val emailHead = item.email.split("@").head
         val imgName = "assets/images/members/" + emailHead + ".png"
-        TeamMemberRow(0,1,item.name,item.position,item.major,item.year,item.bio,item.email,imgName)
+        TeamMemberRow(2,1,item.name,item.position,item.major,item.year,item.bio,item.email,imgName)
       case e: JsError =>
         println("Couldn't construct team member")
         println(e.toString())
