@@ -30,7 +30,7 @@ trait Tables {
    *  @param takenSeats Database column taken_seats SqlType(int4)
    *  @param registrationLink Database column registration_link SqlType(varchar), Length(1000,true)
    *  @param mediaLink Database column media_link SqlType(varchar), Length(1000,true), Default(None) */
-  case class EventRow(id: Int, title: String, subtitle: Option[String] = None, description: String, venue: String, eventDate: java.sql.Date, time: java.sql.Time, maxSeats: Int, takenSeats: Int, registrationLink: String, mediaLink: Option[String] = None)
+  case class EventRow(override val id: Int, title: String, subtitle: Option[String] = None, description: String, venue: String, eventDate: java.sql.Date,override val time: java.sql.Time, maxSeats: Int, takenSeats: Int, registrationLink: String, mediaLink: Option[String] = None) extends Post(eventDate,time,id)
   /** GetResult implicit for fetching EventRow objects using plain SQL queries */
   implicit def GetResultEventRow(implicit e0: GR[Int], e1: GR[String], e2: GR[Option[String]], e3: GR[java.sql.Date], e4: GR[java.sql.Time]): GR[EventRow] = GR{
     prs => import prs._
@@ -179,7 +179,7 @@ trait Tables {
    *  @param biography Database column biography SqlType(text)
    *  @param email Database column email SqlType(varchar), Length(1000,true)
    *  @param mediaUrl Database column media_url SqlType(varchar), Length(1000,true) */
-  case class TeamMemberRow(id: Int, isActive: Int, name: String, position: String, major: String, gradClass: Int, biography: String, email: String, mediaUrl: String)
+  case class TeamMemberRow(override val id: Int, isActive: Int, name: String, position: String, major: String, gradClass: Int, biography: String, email: String, mediaUrl: String)  extends WithID(id)
   /** GetResult implicit for fetching TeamMemberRow objects using plain SQL queries */
   implicit def GetResultTeamMemberRow(implicit e0: GR[Int], e1: GR[String]): GR[TeamMemberRow] = GR{
     prs => import prs._
