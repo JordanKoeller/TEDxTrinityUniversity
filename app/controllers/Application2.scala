@@ -1,5 +1,7 @@
 package controllers
 
+import java.util.concurrent.Executors
+
 import com.typesafe.config.ConfigFactory
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -18,10 +20,10 @@ import model2.Tables._
 @Singleton
 class Application @Inject() (
                               protected val dbConfigProvider: DatabaseConfigProvider,
-                              cc: ControllerComponents)(implicit ec: ExecutionContext)
-  extends AbstractController(cc)  with HasDatabaseConfigProvider[JdbcProfile] {
+                              cc: ControllerComponents)(implicit ec:ExecutionContext)
+  extends AbstractController(cc) {//} with HasDatabaseConfigProvider[JdbcProfile] {
   import profile.api._
-//  val db = Database.forConfig("mydb")
+  val db = Database.forConfig("mydb")
 //  Database.forConfig("maxConnections")
 //  Database.forConfig("myConf")
 
