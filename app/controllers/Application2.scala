@@ -1,5 +1,7 @@
 package controllers
 
+import com.typesafe.config.ConfigFactory
+
 import scala.concurrent.{ExecutionContext, Future}
 import javax.inject._
 import play.api.mvc._
@@ -18,8 +20,10 @@ class Application @Inject() (
                               protected val dbConfigProvider: DatabaseConfigProvider,
                               cc: ControllerComponents)(implicit ec: ExecutionContext)
   extends AbstractController(cc) with HasDatabaseConfigProvider[JdbcProfile] {
-
   import profile.api._
+//  Database.forConfig("maxConnections")
+//  Database.forConfig("myConf")
+
 
   private val formAccepter = new FormAccepter(profile)
 //  private val eventDBBuffer = new DBBuffer[EventRow]()
