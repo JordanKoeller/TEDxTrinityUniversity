@@ -19,8 +19,9 @@ import model2.Tables._
 class Application @Inject() (
                               protected val dbConfigProvider: DatabaseConfigProvider,
                               cc: ControllerComponents)(implicit ec: ExecutionContext)
-  extends AbstractController(cc) with HasDatabaseConfigProvider[JdbcProfile] {
+  extends AbstractController(cc)  with HasDatabaseConfigProvider[JdbcProfile] {
   import profile.api._
+//  val db = Database.forConfig("mydb")
 //  Database.forConfig("maxConnections")
 //  Database.forConfig("myConf")
 

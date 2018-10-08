@@ -21,6 +21,7 @@ libraryDependencies ++= Seq(
                 "com.mohiva" %% "play-silhouette-persistence" % "5.0.3",
                 "com.mohiva" %% "play-silhouette-testkit" % "5.0.3" % "test",
                 "net.codingwell" %% "scala-guice" % "4.1.1",
-                "com.iheart" %% "ficus" % "1.4.1"
+                "com.iheart" %% "ficus" % "1.4.1",
+                "com.typesafe.slick" %% "slick-hikaricp" % "3.2.1"
         )
 
