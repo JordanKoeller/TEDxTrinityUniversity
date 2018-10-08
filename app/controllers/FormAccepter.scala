@@ -64,6 +64,7 @@ class FormAccepter(profile: JdbcProfile) {
           SpeakersRow(tmpId,eventID,elem.name,elem.bio,media)
         }.toArray
       case e: JsError =>
+        println(e.toString())
         println("Failed to parse the speaker correctly.")
         null
     }

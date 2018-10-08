@@ -27,16 +27,13 @@ class Application @Inject() (
 
   def addEventToDB = Action { request =>
     //    try {
-    println("Received ping to add an event to db")
     val event = request.body.asJson.get
     val tableRow = formAccepter.parseEvent((event \ "event").get)
     val speakers = formAccepter.parseSpeakers((event \ "speakers").get,tableRow.id)
-    speakers foreach println
-    println("Constructed Row")
-    println(tableRow)
     val query = db.run(Event += tableRow)
+    println("Sent off table addition")
     val speakerQuery = db.run(Speakers ++= speakers.toIterable)
-    println("Passed ddb.run")
+    println("Sent off Speaker addition")
     query.map{id =>
       println("Query update returned " + id)
     }
