@@ -93,7 +93,7 @@ class Application @Inject() (
     //    "This is the body of the event.","Steiren",null,null,12,10,"This is the link",Some("assets/images/banner.jpg"))
     //    val eventPg = viewstyles.html.event(tmp_post)
     try {
-      val id = 0
+      val id = 1
       val event = db.run(Event.filter(_.id === id).result)
       event.map { e =>
         val item = e.seq.head
