@@ -29,16 +29,16 @@ class Application @Inject() (
     //    try {
     val event = request.body.asJson.get
     val tableRow = formAccepter.parseEvent((event \ "event").get)
-    val speakers = formAccepter.parseSpeakers((event \ "speakers").get,tableRow.id)
-    val query = db.run(Event += tableRow)
+    val query = db.run(Event returning Event.map(_.id) += tableRow)
     println("Sent off table addition")
-    val speakerQuery = db.run(Speakers ++= speakers.toIterable)
     println("Sent off Speaker addition")
     query.map{id =>
       println("Query update returned " + id)
-    }
-    speakerQuery.map{id =>
-      println("Finished adding speakers")
+      val speakers = formAccepter.parseSpeakers((event \ "speakers").get,id)
+      val speakerQuery = db.run(Speakers ++= speakers.toIterable)
+      speakerQuery.map{id2 =>
+        println("Finished adding  " + id2 + "speakers")
+      }
     }
     Ok
   }
