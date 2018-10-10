@@ -3,7 +3,7 @@
 # ~~~~
 
 # Home page
-GET        /                             controllers.Application.index
+GET        /                             controllers.Application.upcomingEvent
 #GET        /Events                       controllers.Application.index
 #GET		   /Feed						 controllers.Application.newsfeed
 #GET		   /Feed/:postnum				 controllers.Application.getAPost(postnum)

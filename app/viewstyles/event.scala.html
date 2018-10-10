@@ -16,9 +16,6 @@
             @if(event.mediaLink.isDefined) {
                 <a href="#" class="image featured"><img src="@event.mediaLink.get" alt="" /></a>
             }
-            <p>
-                event.description
-            </p>
         </section>
     </div>
     <div class="row 150%">
@@ -29,6 +26,7 @@
                         @if(event.takenSeats < event.maxSeats) {
                             <a href="@event.registrationLink"><input type="button" value="Register"></a>
                         }
+                        <p> </p>
                         <ul>
                             <li></li>
                             <li><h3>Date: @event.dateString</h3></li>
