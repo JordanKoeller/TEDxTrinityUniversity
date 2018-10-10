@@ -2,7 +2,6 @@ package controllers
 
 
 
-import com.sun.jmx.snmp.SnmpOidDatabaseSupport
 
 import scala.concurrent.{ExecutionContext, Future}
 import javax.inject._
@@ -11,8 +10,6 @@ import play.api.mvc.AbstractController
 import play.api.mvc.ControllerComponents
 import play.twirl.api.Html
 import model2.Tables._
-import play.db.Database
-import slick.jdbc.JdbcProfile
 
 
 @Singleton
