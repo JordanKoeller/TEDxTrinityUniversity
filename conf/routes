@@ -8,7 +8,7 @@ GET        /                             controllers.Application.upcomingEvent
 #GET		   /Feed						 controllers.Application.newsfeed
 #GET		   /Feed/:postnum				 controllers.Application.getAPost(postnum)
 GET        /AboutTed                     controllers.Application.aboutTed
-#GET        /Sponsors                     controllers.Application.sponsors
+GET        /Sponsors                     controllers.Application.sponsors
 #GET        /ContactOld				     controllers.Application.contact
 GET        /OurTeam						 controllers.Application.ourTeam
 POST        /submitMemberForm               controllers.Application.postMember
