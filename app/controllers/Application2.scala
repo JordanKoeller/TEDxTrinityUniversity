@@ -1,27 +1,25 @@
 package controllers
 
-import java.util.concurrent.Executors
 
-import com.typesafe.config.ConfigFactory
+
+import com.sun.jmx.snmp.SnmpOidDatabaseSupport
 
 import scala.concurrent.{ExecutionContext, Future}
 import javax.inject._
-import play.api.mvc._
-import play.api.db.slick.DatabaseConfigProvider
-import play.api.db.slick.HasDatabaseConfigProvider
+import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
 import play.api.mvc.AbstractController
 import play.api.mvc.ControllerComponents
-import slick.jdbc.JdbcProfile
 import play.twirl.api.Html
 import model2.Tables._
-
+import play.db.Database
+import slick.jdbc.JdbcProfile
 
 
 @Singleton
 class Application @Inject() (
                               protected val dbConfigProvider: DatabaseConfigProvider,
                               cc: ControllerComponents)(implicit ec:ExecutionContext)
-  extends AbstractController(cc) {//} with HasDatabaseConfigProvider[JdbcProfile] {
+  extends AbstractController(cc)  {//with HasDatabaseConfigProvider[JdbcProfile] {
   import profile.api._
   val db = Database.forConfig("mydb")
 //  Database.forConfig("maxConnections")
@@ -89,9 +87,6 @@ class Application @Inject() (
   }
 //
   def upcomingEvent = Action.async {
-    //    val tmp_post = EventRow(12,"This is the title",Some("This is the subtitle"),
-    //    "This is the body of the event.","Steiren",null,null,12,10,"This is the link",Some("assets/images/banner.jpg"))
-    //    val eventPg = viewstyles.html.event(tmp_post)
     try {
       val id = 1
       val event = db.run(Event.filter(_.id === id).result)
@@ -110,5 +105,10 @@ class Application @Inject() (
         Ok(views.html.main("No Upcoming Events", new Html("")))
       }
     }
+  }
+
+  def sponsors = Action {
+    val window = viewstyles.html.CaptionedImage()
+    Ok(views.html.main("Sponsors",window))
   }
 }
