@@ -34,16 +34,10 @@ class Application @Inject() (
     val eventAction = Event returning Event.map(_.id) += tableRow
     eventAction.statements foreach println
     val query = db.run(eventAction)
-    println("Sent off table addition")
-    println("Sent off Speaker addition")
     query.map{id =>
-      println("Query update returned " + id)
       val speakers = formAccepter.parseSpeakers((event \ "speakers").get,id)
       val speakerAction = Speakers ++= speakers
       val speakerQuery = db.run(speakerAction)
-      speakerQuery.map{id2 =>
-        println("Finished adding  " + id2 + "speakers")
-      }
     }
     Ok
   }
@@ -51,11 +45,7 @@ class Application @Inject() (
   def postMember = Action { request =>
     val info = request.body.asJson
     val member = formAccepter.parseMember(info.get)
-    println("Parsed the member")
     val query = db.run(TeamMember += member)
-    query.map{id =>
-      println("Finished adding team member")
-    }
     Ok
   }
 
@@ -93,7 +83,7 @@ class Application @Inject() (
         val speakers = db.run(Speakers.filter(_.eventId === eventID).result)
         speakers.map { speakerSeq =>
           val page = viewstyles.html.event(item, speakerSeq)
-          Ok(views.html.main("Upcoming Event", page))
+          Ok(views.html.main("Upcoming Events", page))
         }
       }.flatten
     }
