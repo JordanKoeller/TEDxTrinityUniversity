@@ -14,7 +14,7 @@ dist
 /RUNNING_PID
 .settings
 .DS_Store
-
+.env
 # hidden cross project folders
 shared/.js
 shared/.jvm
