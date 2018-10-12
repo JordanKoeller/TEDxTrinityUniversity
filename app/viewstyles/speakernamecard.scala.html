@@ -1,5 +1,5 @@
-@import model2.Tables.TeamMemberRow
-@(person:TeamMemberRow)
+@import model2.Tables.SpeakersRow
+@(person:SpeakersRow)
 <section class="wrapper style4 container">
     <div class="row 150%">
         <div class="5u 11u(narrower)">
@@ -7,10 +7,10 @@
             <div class="sidebar">
                 <section>
                     <header>
-                        <h3>@person.position</h3>
+                        <h3>@person.name</h3>
                     </header>
-                    @if(person.mediaUrl != "") { <a href="mailto:@person.mediaUrl" class="image featured"><img
-                    src="@person.mediaUrl" alt="" /></a> }
+                    @if(person.media != "") { <a href="mailto:@person.media" class="image featured"><img
+                    src="@person.media" alt="" /></a> }
                 </section>
             </div>
         </div>
@@ -18,11 +18,8 @@
             <div class="content">
                 <section>
                     <header>
-                        <h2>@person.name</h2>
-                        <h3>@person.major</h2>
-                            <p> Class of @person.gradClass <br> <a href="mailto:@person.email">@person.email</a></p>
                     </header>
-                    @person.biography
+                    @person.bio
                 </section>
             </div>
         </div>

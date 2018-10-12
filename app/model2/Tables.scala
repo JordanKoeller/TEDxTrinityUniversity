@@ -77,7 +77,7 @@ trait Tables {
    *  @param subtitle Database column subtitle SqlType(varchar), Length(1000,true)
    *  @param `abstract` Database column abstract SqlType(varchar), Length(1000,true)
    *  @param mediaLink Database column media_link SqlType(varchar), Length(1000,true), Default(None) */
-  case class NewsletterPostRow(id: Int, postDate: java.sql.Date, description: String, userId: Int, title: String, subtitle: String, `abstract`: String, mediaLink: Option[String] = None)
+  case class NewsletterPostRow(override val id: Int, postDate: java.sql.Date, description: String, userId: Int, title: String, subtitle: String, `abstract`: String, mediaLink: Option[String] = None) extends Post(postDate,null,id)
   /** GetResult implicit for fetching NewsletterPostRow objects using plain SQL queries */
   implicit def GetResultNewsletterPostRow(implicit e0: GR[Int], e1: GR[java.sql.Date], e2: GR[String], e3: GR[Option[String]]): GR[NewsletterPostRow] = GR{
     prs => import prs._
@@ -179,7 +179,12 @@ trait Tables {
    *  @param biography Database column biography SqlType(text)
    *  @param email Database column email SqlType(varchar), Length(1000,true)
    *  @param mediaUrl Database column media_url SqlType(varchar), Length(1000,true) */
-  case class TeamMemberRow(override val id: Int, isActive: Int, name: String, position: String, major: String, gradClass: Int, biography: String, email: String, mediaUrl: String)  extends WithID(id)
+  case class TeamMemberRow(override val id: Int, isActive: Int, name: String, position: String, major: String, gradClass: Int, biography: String, email: String, mediaUrl: String)  extends WithID(id) {
+    def nameLink:String = {
+      val specials  = """$&+,/:;=?@ "<>#%{}|\^~[]'"""
+      name.filterNot(c => specials.contains(c))
+    }
+  }
   /** GetResult implicit for fetching TeamMemberRow objects using plain SQL queries */
   implicit def GetResultTeamMemberRow(implicit e0: GR[Int], e1: GR[String]): GR[TeamMemberRow] = GR{
     prs => import prs._

@@ -1,6 +1,5 @@
 package model2
 
-import java.time.LocalDateTime
 
 abstract class WithID(val id:Int)
 

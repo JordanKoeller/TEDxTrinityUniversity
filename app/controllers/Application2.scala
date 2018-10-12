@@ -5,7 +5,7 @@ package controllers
 
 import scala.concurrent.{ExecutionContext, Future}
 import javax.inject._
-import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
+import play.api.db.slick.DatabaseConfigProvider
 import play.api.mvc.AbstractController
 import play.api.mvc.ControllerComponents
 import play.twirl.api.Html
@@ -16,36 +16,48 @@ import model2.Tables._
 class Application @Inject() (
                               protected val dbConfigProvider: DatabaseConfigProvider,
                               cc: ControllerComponents)(implicit ec:ExecutionContext)
-  extends AbstractController(cc)  {//with HasDatabaseConfigProvider[JdbcProfile] {
+  extends AbstractController(cc)  {
   import profile.api._
   val db = Database.forConfig("mydb")
-//  Database.forConfig("maxConnections")
-//  Database.forConfig("myConf")
-
 
   private val formAccepter = new FormAccepter(profile)
-//  private val eventDBBuffer = new DBBuffer[EventRow]()
-//  private val teamDBBuffer = new DBBuffer[TeamMemberRow]()
 
   def addEventToDB = Action { request =>
     //    try {
     val event = request.body.asJson.get
     val tableRow = formAccepter.parseEvent((event \ "event").get)
     val eventAction = Event returning Event.map(_.id) += tableRow
-    eventAction.statements foreach println
     val query = db.run(eventAction)
     query.map{id =>
       val speakers = formAccepter.parseSpeakers((event \ "speakers").get,id)
       val speakerAction = Speakers ++= speakers
-      val speakerQuery = db.run(speakerAction)
+      db.run(speakerAction)
     }
     Ok
   }
-
   def postMember = Action { request =>
     val info = request.body.asJson
     val member = formAccepter.parseMember(info.get)
-    val query = db.run(TeamMember += member)
+    db.run(TeamMember += member)
+    Ok
+  }
+
+  def postArticle = Action { request =>
+    val info = request.body.asJson
+    val (post,email) = formAccepter.parseNewsArticle(info.get,db)
+    val memberQuery = db.run(TeamMember.filter(_.email === email).result)
+    memberQuery.map{ret =>
+      val id = ret.head.id
+      val memberInsert = NewsletterPostRow(post.id,
+        post.postDate,
+        post.description,
+        id,
+        post.title,
+        post.subtitle,
+        post.`abstract`,
+        post.mediaLink)
+      db.run(NewsletterPost += memberInsert)
+    }
     Ok
   }
 
@@ -72,7 +84,7 @@ class Application @Inject() (
     val content = views.html.aboutTed()
     Ok(views.html.main("About Ted",content))
   }
-//
+  //
   def upcomingEvent = Action.async {
     try {
       val id = 1
@@ -97,5 +109,15 @@ class Application @Inject() (
   def sponsors = Action {
     val window = viewstyles.html.CaptionedImage()
     Ok(views.html.main("Sponsors",window))
+  }
+
+  def speaker(id:Int) = Action.async {
+    val speakers = db.run(Speakers.filter(_.eventId === id).result)
+    speakers.map { ret =>
+      val namecards = ret.seq.foldLeft(new Html("")) { (old: Html, speaker: SpeakersRow) =>
+        new Html(old.body + viewstyles.html.speakernamecard(speaker))
+      }
+      Ok(views.html.main("Event Speakers", namecards))
+    }
   }
 }

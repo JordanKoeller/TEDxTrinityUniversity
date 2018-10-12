@@ -5,9 +5,9 @@ import java.sql.Date
 import java.sql.Time
 import java.time.ZoneId
 import java.time.temporal.ChronoField
+
 import play.api.libs.json._
 import slick.jdbc.JdbcProfile
-
 import model2.Tables._
 
 class FormAccepter(profile: JdbcProfile) {
@@ -16,11 +16,12 @@ class FormAccepter(profile: JdbcProfile) {
   sealed case class SpeakerJSMapper(name:String, bio:String)
   sealed case class SpeakerSeqMapper(speakers:Seq[SpeakerJSMapper])
   sealed case class TeamMemberConverter(name:String,position:String,major:String,year:Int,bio:String,email:String)
+  sealed case class NewspostJSMapper(title:String,subtitle:String,`abstract`:String,body:String,media:String,email:String)
   implicit val eventConverter = Json.reads[EventJSMapper]
   implicit val speakerConverter = Json.reads[SpeakerJSMapper]
   implicit val speakerCol = Json.reads[SpeakerSeqMapper]
   implicit val teamMemberConverter = Json.reads[TeamMemberConverter]
-
+  implicit val newspostConverter = Json.reads[NewspostJSMapper]
 
   def parseEvent(js:JsValue):EventRow = {
     val jsMapper:JsResult[EventJSMapper] = Json.fromJson[EventJSMapper](js)
@@ -38,7 +39,7 @@ class FormAccepter(profile: JdbcProfile) {
         val dateTime = LocalDateTime.of(year,month,day,hr,min)
         val epochsec = dateTime.atZone(ZoneId.of("America/Chicago")).getLong(ChronoField.INSTANT_SECONDS) * 1000
         //        val date = event.date.atZone(ZoneId.of("America/Chicago"))
-//        val epochsec = dateTime.getLong(ChronoField.INSTANT_SECONDS) * 1000
+        //        val epochsec = dateTime.getLong(ChronoField.INSTANT_SECONDS) * 1000
         val sqldate = new Date(epochsec)
         val sqltime = new Time(epochsec)
         val regLink = "#"
@@ -54,7 +55,7 @@ class FormAccepter(profile: JdbcProfile) {
   }
 
   def parseSpeakers(js:JsValue,eventID:Int):Array[SpeakersRow] = {
-//    val list = js.as[List[SpeakerJSMapper]]
+    //    val list = js.as[List[SpeakerJSMapper]]
     val jsMapper:JsResult[Seq[SpeakerJSMapper]] = Json.fromJson[Seq[SpeakerJSMapper]](js)
     jsMapper match {
       case JsSuccess(item:Seq[SpeakerJSMapper],path:JsPath) =>
@@ -81,6 +82,20 @@ class FormAccepter(profile: JdbcProfile) {
       case e: JsError =>
         println("Couldn't construct team member")
         println(e.toString())
+        null
+    }
+  }
+
+  def parseNewsArticle(js:JsValue,db:model2.Tables.profile.backend.Database):(NewsletterPostRow,String) = {
+    val jsMapper: JsResult[NewspostJSMapper] = Json.fromJson[NewspostJSMapper](js)
+    jsMapper match {
+      case JsSuccess(item: NewspostJSMapper, path: JsPath) =>
+        val date = new java.util.Date()
+        val sqlDate = new java.sql.Date(date.getTime)
+        val media = if (item.media != "") Some(item.media) else None
+        (NewsletterPostRow(0, sqlDate, item.body, -1, item.title, item.subtitle, item.`abstract`, media), item.email)
+      case e: JsError =>
+        println("Failed parsing the newsarticle")
         null
     }
   }
