@@ -10,7 +10,7 @@ GET        /OurTeam						 controllers.Application.ourTeam
 POST        /submitMemberForm               controllers.Application.postMember
 POST        /submitEventForm              controllers.Application.addEventToDB
 GET         /Events                     controllers.Application.upcomingEvent
-#GET         /Feed                       controllers.Application.newsFeed
+GET         /Feed                       controllers.Application.newsFeed
 # Prefix must match `play.assets.urlPrefix`
 
 GET        /assets/*file                 controllers.Assets.at(file)
