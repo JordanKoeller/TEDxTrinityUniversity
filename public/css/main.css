@@ -1534,6 +1534,7 @@ input[type="text"], input[type="password"], input[type="email"] {
 .image.featured {
 	display: block;
 	margin: 0 0 2em 0;
+	max-width: 80%;
 }
 
 .image.featured img {
