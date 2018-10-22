@@ -18,7 +18,7 @@ dist
 # hidden cross project folders
 shared/.js
 shared/.jvm
-
+.env
 # temp files
 .~*
 *~

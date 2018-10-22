@@ -11,6 +11,8 @@ import play.api.mvc.ControllerComponents
 import play.twirl.api.Html
 import model2.Tables._
 
+import scala.util.{Failure, Success, Try}
+
 
 @Singleton
 class Application @Inject() (
@@ -74,9 +76,26 @@ class Application @Inject() (
     val members = db.run(TeamMember.filter(_.isActive === 1).result)
     members.map{ret =>
       val page = ret.seq.foldLeft(new Html("")){(old:Html,member:TeamMemberRow) =>
-        new Html(old.body + viewstyles.html.namecard(member))
+        new Html(old.body + views.html.namecard(member))
       }
       Ok(views.html.main("Our Team",page))
+    }
+  }
+
+
+
+  def newsFeed = Action.async {
+    val query = NewsletterPost joinLeft TeamMember on (_.userId === _.id)
+    val result = db.run(query.result)
+    result.map{q =>
+      val page = q.foldLeft(new Html("")){(old,res) =>
+        val post = res._1
+        //We assume it is a success
+        val poster = res._2.get
+        val view = views.html.newsPost(post,poster)
+        new Html(old.body + view)
+      }
+      Ok(views.html.main("Newsletter",page))
     }
   }
 
@@ -94,7 +113,7 @@ class Application @Inject() (
         val eventID = item.id
         val speakers = db.run(Speakers.filter(_.eventId === eventID).result)
         speakers.map { speakerSeq =>
-          val page = viewstyles.html.event(item, speakerSeq)
+          val page = views.html.event(item, speakerSeq)
           Ok(views.html.main("Upcoming Events", page))
         }
       }.flatten
@@ -107,7 +126,7 @@ class Application @Inject() (
   }
 
   def sponsors = Action {
-    val window = viewstyles.html.CaptionedImage()
+    val window = views.html.CaptionedImage()
     Ok(views.html.main("Sponsors",window))
   }
 
@@ -115,7 +134,7 @@ class Application @Inject() (
     val speakers = db.run(Speakers.filter(_.eventId === id).result)
     speakers.map { ret =>
       val namecards = ret.seq.foldLeft(new Html("")) { (old: Html, speaker: SpeakersRow) =>
-        new Html(old.body + viewstyles.html.speakernamecard(speaker))
+        new Html(old.body + views.html.speakernamecard(speaker))
       }
       Ok(views.html.main("Event Speakers", namecards))
     }
