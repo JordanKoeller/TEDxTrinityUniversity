@@ -3,12 +3,13 @@
 # ~~~~
 
 # Home page
-GET        /                             controllers.Application.upcomingEvent
-GET        /AboutTed                     controllers.Application.aboutTed
-GET        /Sponsors                     controllers.Application.sponsors
-GET        /OurTeam						 controllers.Application.ourTeam
-POST        /submitMemberForm               controllers.Application.postMember
-POST        /submitEventForm              controllers.Application.addEventToDB
+GET        /                            controllers.Application.upcomingEvent
+GET        /AboutTed                    controllers.Application.aboutTed
+GET        /Sponsors                    controllers.Application.sponsors
+GET        /OurTeam						controllers.Application.ourTeam
+POST        /submitMemberForm           controllers.Application.postMember
+POST        /submitEventForm            controllers.Application.addEventToDB
+POST        /submitNewsletterForm       controllers.Application.postArticle
 GET         /Events                     controllers.Application.upcomingEvent
 GET         /Feed                       controllers.Application.newsFeed
 # Prefix must match `play.assets.urlPrefix`

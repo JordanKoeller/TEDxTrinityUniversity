@@ -47,6 +47,7 @@ class Application @Inject() (
   def postArticle = Action { request =>
     val info = request.body.asJson
     val (post,email) = formAccepter.parseNewsArticle(info.get,db)
+    try {
     val memberQuery = db.run(TeamMember.filter(_.email === email).result)
     memberQuery.map{ret =>
       val id = ret.head.id
@@ -60,7 +61,13 @@ class Application @Inject() (
         post.mediaLink)
       db.run(NewsletterPost += memberInsert)
     }
-    Ok
+    Ok}
+    catch {
+      case e:Throwable => {
+        println("Unable to find a teammember. Submitter does not have permission to post.")
+        throw new IllegalArgumentException()
+      }
+    }
   }
 
 

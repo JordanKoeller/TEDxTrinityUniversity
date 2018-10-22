@@ -92,6 +92,7 @@ class FormAccepter(profile: JdbcProfile) {
       case JsSuccess(item: NewspostJSMapper, path: JsPath) =>
         val date = new java.util.Date()
         val sqlDate = new java.sql.Date(date.getTime)
+
         val media = if (item.media != "") Some(item.media) else None
         (NewsletterPostRow(0, sqlDate, item.body, -1, item.title, item.subtitle, item.`abstract`, media), item.email)
       case e: JsError =>
