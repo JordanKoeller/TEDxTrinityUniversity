@@ -119,7 +119,7 @@ class Application @Inject() (
       query.map{q =>
         val events = q.groupBy(_._1.id)
         val pages = events.foldLeft(new Html("")){(html,kv) =>
-          val speakers = kv._2.flatMap{e => Seq(e._2.getOrElse(null))}
+          val speakers = kv._2.flatMap{e => Seq(e._2.getOrElse(null))}.filter(_ != null)
           val pg = views.html.event(kv._2.head._1,speakers)
           new Html(html.body + pg.body)
         }
