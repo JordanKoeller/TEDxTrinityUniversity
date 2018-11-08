@@ -32,7 +32,7 @@ class Application @Inject() (
     val query = db.run(eventAction)
     query.map{id =>
       val speakers = formAccepter.parseSpeakers((event \ "speakers").get,id)
-      val speakerAction = Speakers ++= speakers
+      val speakerAction = (Speakers ++= speakers)
       db.run(speakerAction)
     }
     Ok
@@ -114,18 +114,18 @@ class Application @Inject() (
   //
   def upcomingEvent = Action.async {
     try {
-      val id = 1
-      val event = db.run(Event.filter(_.id === id).result)
-      event.map { e =>
-        val item = e.seq.head
-        val eventID = item.id
-        val speakers = db.run(Speakers.filter(_.eventId === eventID).result)
-        speakers.map { speakerSeq =>
-          val page = views.html.event(item, speakerSeq)
-          Ok(views.html.main("Upcoming Events", page))
+      val joined = Event joinLeft Speakers on (_.id === _.eventId)
+      val query = db.run(joined.result)
+      query.map{q =>
+        val events = q.groupBy(_._1.id)
+        val pages = events.foldLeft(new Html("")){(html,kv) =>
+          val speakers = kv._2.flatMap{e => Seq(e._2.getOrElse(null))}
+          val pg = views.html.event(kv._2.head._1,speakers)
+          new Html(html.body + pg.body)
         }
-      }.flatten
-    }
+        Ok(views.html.main("Upcoming Events", pages))
+      }
+   }
     catch {
       case e: java.lang.UnsupportedOperationException => Future {
         Ok(views.html.main("No Upcoming Events", new Html("")))
