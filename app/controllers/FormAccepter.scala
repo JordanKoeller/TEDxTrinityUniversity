@@ -46,6 +46,7 @@ class FormAccepter(profile: JdbcProfile) {
         val takenSeats = 0
         val id = 2
         val subOpt = if (item.subtitle != "") Some(item.subtitle) else None
+        val media = if (item.mediaLink != "") Some("https://drive.google.com/uc?id="+item.mediaLink) else None
         EventRow(id,item.title,subOpt,item.description,item.venue,sqldate,sqltime,item.numSeats.toInt,takenSeats,regLink,item.mediaLink)
       case e: JsError =>
         println("Failed to construct JSValue currectly.")
@@ -93,7 +94,7 @@ class FormAccepter(profile: JdbcProfile) {
         val date = new java.util.Date()
         val sqlDate = new java.sql.Date(date.getTime)
 
-        val media = if (item.media != "") Some(item.media) else None
+        val media = if (item.media != "") Some("https://drive.google.com/uc?id="+item.media) else None
         (NewsletterPostRow(0, sqlDate, item.body, -1, item.title, item.subtitle, item.`abstract`, media), item.email)
       case e: JsError =>
         println("Failed parsing the newsarticle")
