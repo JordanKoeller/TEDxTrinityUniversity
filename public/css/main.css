@@ -152,7 +152,7 @@ body {
 	}
 }
 
-@media screen and (max-width: 840px) {
+@media screen and (max-width: 1040px) {
 	.container.\31 25\25 {
 		width: 100%;
 		max-width: 118.75%;
@@ -935,7 +935,7 @@ body {
 	}
 }
 
-@media screen and (max-width: 840px) {
+@media screen and (max-width: 1040px) {
 	.row>* {
 		padding: 30px 0 0 30px;
 	}
@@ -2407,7 +2407,7 @@ body.index #main {
 	display: none;
 }
 
-@media screen and (max-width: 840px) {
+@media screen and (max-width: 1040px) {
 	/* Basic */
 	html, body {
 		overflow-x: hidden;
