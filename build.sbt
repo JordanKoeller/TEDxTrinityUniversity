@@ -6,6 +6,7 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 resolvers += Resolver.jcenterRepo
 resolvers += Resolver.sonatypeRepo("snapshots")
+//resolvers += "Kaliber Internal Repository" at "https://jars.kaliber.io/artifactory/libs-release-local"
 
 scalaVersion := "2.12.4"
 
@@ -22,8 +23,8 @@ libraryDependencies ++= Seq(
                 "com.mohiva" %% "play-silhouette-testkit" % "5.0.3" % "test",
                 "net.codingwell" %% "scala-guice" % "4.1.1",
                 "com.iheart" %% "ficus" % "1.4.1",
-                "com.typesafe.slick" %% "slick-hikaricp" % "3.2.1"
-//  jdbc % Test
+                "com.typesafe.slick" %% "slick-hikaricp" % "3.2.1",
+//                "net.kaliber" %% "play-s3" % "9.0.0"
 
         )
 
