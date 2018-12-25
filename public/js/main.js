@@ -9,8 +9,8 @@
 	skel.breakpoints({
 		wide: '(max-width: 1680px)',
 		normal: '(max-width: 1280px)',
-		narrow: '(max-width: 1040px)',
-		narrower: '(max-width: 840px)',
+		narrow: '(max-width: 1120px)',
+		narrower: '(max-width: 1080px)',
 		mobile: '(max-width: 736px)'
 	});
 
