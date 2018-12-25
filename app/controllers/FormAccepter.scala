@@ -46,7 +46,7 @@ class FormAccepter(profile: JdbcProfile) {
         val takenSeats = 0
         val id = 2
         val subOpt = if (item.subtitle != "") Some(item.subtitle) else None
-        val media = if (item.mediaLink != "") Some("https://drive.google.com/uc?id="+item.mediaLink) else None
+        val media = if (item.mediaLink != "") Some("https://drive.google.com/uc?id="+item.mediaLink.get) else None
         EventRow(id,item.title,subOpt,item.description,item.venue,sqldate,sqltime,item.numSeats.toInt,takenSeats,regLink,media)
       case e: JsError =>
         println("Failed to construct JSValue currectly.")
