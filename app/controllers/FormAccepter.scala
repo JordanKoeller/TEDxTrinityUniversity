@@ -15,7 +15,7 @@ class FormAccepter(profile: JdbcProfile) {
   sealed case class EventJSMapper(title:String, subtitle:String, description:String, venue:String,date:String,time:String,numSeats:String,mediaLink:Option[String])
   sealed case class SpeakerJSMapper(name:String, bio:String)
   sealed case class SpeakerSeqMapper(speakers:Seq[SpeakerJSMapper])
-  sealed case class TeamMemberConverter(name:String,position:String,major:String,year:Int,bio:String,email:String,mediaURL:String)
+  sealed case class TeamMemberConverter(name:String,position:String,major:String,year:Int,bio:String,mediaURL:String,email:String)
   sealed case class NewspostJSMapper(title:String,subtitle:String,`abstract`:String,body:String,media:String,email:String)
   implicit val eventConverter = Json.reads[EventJSMapper]
   implicit val speakerConverter = Json.reads[SpeakerJSMapper]
