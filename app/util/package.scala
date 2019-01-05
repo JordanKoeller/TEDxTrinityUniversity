@@ -10,6 +10,7 @@ package object util {
 	implicit def articleToList(arg:Article):List[Article] = arg::Nil
 	implicit def htmlToList(arg:Html):List[Html] = arg::Nil
 	implicit def stringToList(arg:String):List[String] = arg::Nil
+	implicit def htmlSeqToHtml(arg:Seq[Html]):Html = arg.foldLeft(new Html(""))((acc,elem) => acc + elem.body)
 //
 	case class Article(title:Html,body:Html,subtitle:Option[Html]=None,image:Option[Html] = None)
 //

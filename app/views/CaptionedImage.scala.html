@@ -1,11 +1,10 @@
-@()
+@(linkUrl:String, imageUrl:String)
 
 <section class="wrapper style1 container special">
     <div class="row">
         <div class="col-4 col-12-narrower">
-
             <section>
-                <a class="image featured" target="_blank" href="https://new.trinity.edu/"><img src="assets/images/TULogo.png" style="display:block;margin-left:auto;margin-right:auto;"></a>
+                <a class="image featured" target="_blank" href="@linkUrl"><img src="@imageUrl" style="background-color:#ddd;border-radius:25px;padding:20px;"></a>
             </section>
 
         </div>

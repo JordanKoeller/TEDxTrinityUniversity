@@ -11,9 +11,6 @@ import play.api.mvc.ControllerComponents
 import play.twirl.api.Html
 import model2.Tables._
 
-import scala.util.{Failure, Success, Try}
-
-
 @Singleton
 class Application @Inject() (
                               protected val dbConfigProvider: DatabaseConfigProvider,
@@ -134,8 +131,8 @@ class Application @Inject() (
   }
 
   def sponsors = Action {
-    val window = views.html.CaptionedImage()
-    Ok(views.html.main("Sponsors",window))
+    val trinity = views.html.CaptionedImage("https://new.trinity.edu/","assets/images/TULogo.png")
+    Ok(views.html.main("Sponsors",trinity))
   }
 
   def speaker(id:Int) = Action.async {
