@@ -12,7 +12,7 @@ import model2.Tables._
 
 class FormAccepter(profile: JdbcProfile) {
 
-  sealed case class EventJSMapper(title:String, subtitle:String, description:String, venue:String,date:String,time:String,numSeats:String,mediaLink:Option[String])
+  sealed case class EventJSMapper(title:String, subtitle:String, description:String, venue:String,date:String,time:String,numSeats:String,registrationLink:String,mediaLink:Option[String])
   sealed case class SpeakerJSMapper(name:String, bio:String,image:Option[String])
   sealed case class SpeakerSeqMapper(speakers:Seq[SpeakerJSMapper])
   sealed case class TeamMemberConverter(name:String,position:String,major:String,year:Int,bio:String,mediaURL:String,email:String)
@@ -42,7 +42,7 @@ class FormAccepter(profile: JdbcProfile) {
         //        val epochsec = dateTime.getLong(ChronoField.INSTANT_SECONDS) * 1000
         val sqldate = new Date(epochsec)
         val sqltime = new Time(epochsec)
-        val regLink = "#"
+        val regLink = item.registrationLink
         val takenSeats = 0
         val id = 2
         val subOpt = if (item.subtitle != "") Some(item.subtitle) else None
@@ -62,6 +62,7 @@ class FormAccepter(profile: JdbcProfile) {
       case JsSuccess(item:Seq[SpeakerJSMapper],path:JsPath) =>
         val tmpId = 3
         item.map{ elem =>
+          val img = if (elem.image.isDefined) "https://drive.google.com/uc?id=" + elem.image.get else ""
           SpeakersRow(tmpId,eventID,elem.name,elem.bio,elem.image.getOrElse(""))
         }.toArray
       case e: JsError =>
