@@ -34,7 +34,7 @@
                             <li><h3>Location: @event.venue</h3></li>
                             <li><h3>Speakers:</h3></li>
                             @for(speaker <- speakers) {
-                                <li><a href="/@speaker.eventId">@speaker.name</a></li>
+                                <li><a href="/Events/Speaker/@speaker.eventId">@speaker.name</a></li>
                             }
                         </ul>
                     </header>

@@ -63,7 +63,7 @@ class FormAccepter(profile: JdbcProfile) {
         val tmpId = 3
         item.map{ elem =>
           val img = if (elem.image.isDefined) "https://drive.google.com/uc?id=" + elem.image.get else ""
-          SpeakersRow(tmpId,eventID,elem.name,elem.bio,elem.image.getOrElse(""))
+          SpeakersRow(tmpId,eventID,elem.name,elem.bio,img)
         }.toArray
       case e: JsError =>
         println(e.toString())
