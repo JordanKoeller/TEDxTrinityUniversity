@@ -119,7 +119,8 @@ class Application @Inject() (
           val speakers = kv._2.flatMap{e => Seq(e._2.getOrElse(null))}.filter(_ != null).sortBy(_.name.split(" ").last)
           val speakerCards = speakers.map(e => views.html.speakernamecard(e))
           val pg = views.html.event(kv._2.head._1,speakers)
-          new Html(html.body + pg.body + speakerCards)
+          val speakerCardsHtml = speakerCards.foldLeft(new Html("")){(h1,k1) => new Html(h1.body + k1.body)}
+          new Html(html.body + pg.body + speakerCardsHtml)
         }
         Ok(views.html.main("Upcoming Events", pages))
       }
