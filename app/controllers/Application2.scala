@@ -80,7 +80,7 @@ class Application @Inject() (
   def ourTeam = Action.async {
     val members = db.run(TeamMember.filter(_.isActive === 1).result)
     members.map{ret =>
-      val page = ret.seq.foldLeft(new Html("")){(old:Html,member:TeamMemberRow) =>
+      val page = ret.seq.sortBy(_.name.split(" ").last).foldLeft(new Html("")){(old:Html,member:TeamMemberRow) =>
         new Html(old.body + views.html.namecard(member))
       }
       Ok(views.html.main("Our Team",page))
@@ -116,7 +116,7 @@ class Application @Inject() (
       query.map{q =>
         val events = q.groupBy(_._1.id)
         val pages = events.foldLeft(new Html("")){(html,kv) =>
-          val speakers = kv._2.flatMap{e => Seq(e._2.getOrElse(null))}.filter(_ != null)
+          val speakers = kv._2.flatMap{e => Seq(e._2.getOrElse(null))}.filter(_ != null).sortBy(_.name.split(" ").last)
           val speakerCards = speakers.map(e => views.html.speakernamecard(e))
           val pg = views.html.event(kv._2.head._1,speakers)
           new Html(html.body + pg.body + speakerCards)
