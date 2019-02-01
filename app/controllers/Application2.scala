@@ -117,12 +117,13 @@ class Application @Inject() (
         val events = q.groupBy(_._1.id)
         val pages = events.foldLeft(new Html("")){(html,kv) =>
           val speakers = kv._2.flatMap{e => Seq(e._2.getOrElse(null))}.filter(_ != null)
+          val speakerCards = speakers.map(e => views.html.speakernamecard(e))
           val pg = views.html.event(kv._2.head._1,speakers)
-          new Html(html.body + pg.body)
+          new Html(html.body + pg.body + speakerCards)
         }
         Ok(views.html.main("Upcoming Events", pages))
       }
-   }
+    }
     catch {
       case e: java.lang.UnsupportedOperationException => Future {
         Ok(views.html.main("No Upcoming Events", new Html("")))
@@ -130,18 +131,28 @@ class Application @Inject() (
     }
   }
 
+//  def upcomingEvent = Action.async {
+//    try {
+//      val joined = Event joinLeft Speakers on (_.id === _.eventId)
+//      val query = db.run(joined.result)
+//      query.map { q =>
+//        val queryReturn = q.head
+//        val event = queryReturn._1
+//        val speakers = queryReturn._2
+//        val namecards = speakers.seq.foldLeft(new Html("")) { (old: Html, speaker: SpeakersRow) =>
+//          new Html(old.body + views.html.speakernamecard(speaker))
+//        }
+//        val eventPage = views.html.event(event)
+//      }
+//    }
+//
+//    ???
+//  }
+
   def sponsors = Action {
     val trinity = views.html.CaptionedImage("https://new.trinity.edu/","assets/images/TULogo.png")
     Ok(views.html.main("Sponsors",trinity))
   }
 
-  def speaker(id:Int) = Action.async {
-    val speakers = db.run(Speakers.filter(_.eventId === id).result)
-    speakers.map { ret =>
-      val namecards = ret.seq.foldLeft(new Html("")) { (old: Html, speaker: SpeakersRow) =>
-        new Html(old.body + views.html.speakernamecard(speaker))
-      }
-      Ok(views.html.main("Event Speakers", namecards))
-    }
-  }
+
 }

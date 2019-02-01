@@ -12,7 +12,8 @@ POST        /submitEventForm            controllers.Application.addEventToDB
 POST        /submitNewsletterForm       controllers.Application.postArticle
 GET         /Events                     controllers.Application.upcomingEvent
 GET         /Feed                       controllers.Application.newsFeed
-GET        /Events/Speaker/:id          controllers.Application.speaker(id:Int)
+#GET        /Events/Speaker/:id          controllers.Application.speaker(id:Int)
+
 # Prefix must match `play.assets.urlPrefix`
 
 GET        /assets/*file                 controllers.Assets.at(file)
