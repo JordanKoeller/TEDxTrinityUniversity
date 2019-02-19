@@ -116,7 +116,10 @@ class Application @Inject() (
       query.map{q =>
         val events = q.groupBy(_._1.id)
         val pages = events.foldLeft(new Html("")){(html,kv) =>
-          val speakers = kv._2.flatMap{e => Seq(e._2.getOrElse(null))}.filter(_ != null).sortBy(_.name.split(" ").last)
+          //          val speakers = kv._2.flatMap{e => Seq(e._2.getOrElse(null))}.filter(_ != null).sortBy(_.name.split(" ").last)
+          val speaks = kv._2.flatMap{e => Seq(e._2.getOrElse(null))}.filter(_ != null).sortBy(_.name.split(" ").last)
+          val banned = Array(16,20,22,24)
+          val speakers = speaks.filterNot(elem => banned.contains(elem.speakerId))
           val speakerCards = speakers.map(e => views.html.speakernamecard(e))
           val pg = views.html.event(kv._2.head._1,speakers)
           val speakerCardsHtml = speakerCards.foldLeft(new Html("")){(h1,k1) => new Html(h1.body + k1.body)}
