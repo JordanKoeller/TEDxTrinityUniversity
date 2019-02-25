@@ -13,8 +13,8 @@
                     <h3>@event.subtitle.get</h3>
                 }
             </header>
-            @if(event.mediaLink.isDefined) {
-                <a href="#" class="image featured"><img src="@event.mediaLink.get" alt="" /></a>
+            @if(event.takenSeats < event.maxSeats) {
+                <script src="https://web-cdn.fixr.co/scripts/fixr-shop-widget.v1.min.js" data-fixr-shop-id="9f88a818-f3f7-4032-8473-e0d9ea7703ef" data-fixr-theme="light"></script>
             }
         </section>
     </div>
@@ -23,8 +23,8 @@
             <div class="sidebar">
                 <section>
                     <header>
-                        @if(event.takenSeats < event.maxSeats) {
-                            <script src="https://web-cdn.fixr.co/scripts/fixr-shop-widget.v1.min.js" data-fixr-shop-id="9f88a818-f3f7-4032-8473-e0d9ea7703ef" data-fixr-theme="light"></script>
+                        @if(event.mediaLink.isDefined) {
+                            <a href="#" class="image featured"><img src="@event.mediaLink.get" alt="" /></a>
                         }
                         <p> </p>
                         <ul>
