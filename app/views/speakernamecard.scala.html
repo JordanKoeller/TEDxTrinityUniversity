@@ -7,10 +7,8 @@
             <div class="content">
                 <section>
                     <header>
-                        <h3>@person.name</h3>
                     </header>
-                    @if(person.media != "") { <a href="" class="image featured"><img
-                    src="@person.media" alt="" /></a> }
+                    @person.bio
                 </section>
             </div>
         </div>
@@ -18,8 +16,10 @@
             <div class="sidebar">
                 <section>
                     <header>
+                        <h3>@person.name</h3>
                     </header>
-                    @person.bio
+                    @if(person.media != "") { <a href="" class="image featured"><img
+                    src="@person.media" alt="" /></a> }
                 </section>
             </div>
         </div>
