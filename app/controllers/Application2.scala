@@ -10,6 +10,7 @@ import play.api.mvc.AbstractController
 import play.api.mvc.ControllerComponents
 import play.twirl.api.Html
 import model2.Tables._
+import util._
 
 @Singleton
 class Application @Inject() (
@@ -135,27 +136,11 @@ class Application @Inject() (
     }
   }
 
-//  def upcomingEvent = Action.async {
-//    try {
-//      val joined = Event joinLeft Speakers on (_.id === _.eventId)
-//      val query = db.run(joined.result)
-//      query.map { q =>
-//        val queryReturn = q.head
-//        val event = queryReturn._1
-//        val speakers = queryReturn._2
-//        val namecards = speakers.seq.foldLeft(new Html("")) { (old: Html, speaker: SpeakersRow) =>
-//          new Html(old.body + views.html.speakernamecard(speaker))
-//        }
-//        val eventPage = views.html.event(event)
-//      }
-//    }
-//
-//    ???
-//  }
 
   def sponsors = Action {
     val trinity = views.html.CaptionedImage("https://new.trinity.edu/","assets/images/TULogo.png")
-    Ok(views.html.main("Sponsors",trinity))
+    val bertsch = views.html.CaptionedImage("https://www.assistingseniors.com/","assets/images/Bertsch.png")
+    Ok(views.html.main("Sponsors",Seq(trinity,bertsch)))
   }
 
 
