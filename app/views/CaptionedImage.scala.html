@@ -1,10 +1,12 @@
-@(linkUrl:String, imageUrl:String)
+@(imgs:Seq[(String,String)])
 
 <section class="wrapper style1 container special">
     <div class="row">
         <div class="col-4 col-12-narrower">
             <section>
-                <a class="image featured" target="_blank" href="@linkUrl"><img src="@imageUrl" style="background-color:#ddd;border-radius:25px;padding:20px;"></a>
+		    @for(elem <- imgs) {
+                  <a class="image featured" target="_blank" href="@elem._2"><img src="@elem._1" style="background-color:#ddd;border-radius:25px;padding:20px;"></a>
+		}
             </section>
 
         </div>
