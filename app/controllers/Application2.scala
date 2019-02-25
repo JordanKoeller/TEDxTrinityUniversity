@@ -79,9 +79,12 @@ class Application @Inject() (
   }
 
   def ourTeam = Action.async {
+    val idOrder = Array(47,2,43,46,1,38)
     val members = db.run(TeamMember.filter(_.isActive === 1).result)
     members.map{ret =>
-      val page = ret.seq.sortBy(_.name.split(" ").last).foldLeft(new Html("")){(old:Html,member:TeamMemberRow) =>
+      val (leaders,rest) = ret.seq.partition(e => idOrder.contains(e.id))
+      val sortedLeaders = idOrder.map(id => leaders.seq.find(_.id == id).get)
+      val page = (sortedLeaders ++ rest.toArray.sortBy(_.name.split(" ").last)).foldLeft(new Html("")){(old:Html,member:TeamMemberRow) =>
         new Html(old.body + views.html.namecard(member))
       }
       Ok(views.html.main("Our Team",page))
