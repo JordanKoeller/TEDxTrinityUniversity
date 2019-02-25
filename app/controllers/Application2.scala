@@ -143,7 +143,7 @@ class Application @Inject() (
   def sponsors = Action {
     val trinity = views.html.CaptionedImage("https://new.trinity.edu/","assets/images/TULogo.png")
     val bertsch = views.html.CaptionedImage("https://www.assistingseniors.com/","assets/images/Bertsch.png")
-    val business = views.html.CaptionedImage("https://new.trinity.edu/academics/departments/business-administration","assets/images/BusinessDept")
+    val business = views.html.CaptionedImage("https://new.trinity.edu/academics/departments/business-administration","assets/images/BusinessDept.jpg")
     Ok(views.html.main("Sponsors",Seq(trinity,bertsch,business)))
   }
 
