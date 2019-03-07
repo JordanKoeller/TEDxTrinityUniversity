@@ -1266,7 +1266,7 @@ body {
 /* Basic */
 body {
 	background-attachment: fixed;
-	background-color: #ffffff;
+	background-color: #eee;
     /*background-image:  url("images/wallpaper_TEDxTUCrop.jpg");*/
 	/*background-position: center;*/
     /*background-position-y: 0%;*/
@@ -1914,10 +1914,9 @@ top
 }
 }
 #header {
-	background: #eee;
+	background: #fff;
 	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.075);
 	opacity: 0.90;
-	color: inherit;
 	cursor: default;
 	font-size: 0.8em;
 	left: 0;
