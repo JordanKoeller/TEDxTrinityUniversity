@@ -1266,8 +1266,8 @@ body {
 /* Basic */
 body {
 	background-attachment: fixed;
-	/*background-color: #000000;*/
-    background-image:  url("images/wallpaper_TEDxTUCrop.jpg");
+	background-color: #ffffff;
+    /*background-image:  url("images/wallpaper_TEDxTUCrop.jpg");*/
 	/*background-position: center;*/
     /*background-position-y: 0%;*/
 	background-repeat: repeat;
