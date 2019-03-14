@@ -122,7 +122,7 @@ class Application @Inject() (
         val pages = events.foldLeft(new Html("")){(html,kv) =>
           //          val speakers = kv._2.flatMap{e => Seq(e._2.getOrElse(null))}.filter(_ != null).sortBy(_.name.split(" ").last)
           val speaks = kv._2.flatMap{e => Seq(e._2.getOrElse(null))}.filter(_ != null).sortBy(_.name.split(" ").last)
-          val banned = Array(20,24)
+          val banned = Array(24)
           val speakers = speaks.filterNot(elem => banned.contains(elem.speakerId))
           val speakerCards = speakers.map(e => views.html.speakernamecard(e))
           val pg = views.html.event(kv._2.head._1,speakers)
