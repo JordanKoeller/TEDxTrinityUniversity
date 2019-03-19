@@ -124,7 +124,7 @@ class Application @Inject() (
           val speaks = kv._2.flatMap{e => Seq(e._2.getOrElse(null))}.filter(_ != null).sortBy(_.name.split(" ").last)
           val banned = Array(24)
           val speakers = speaks.filterNot(elem => banned.contains(elem.speakerId))
-          val speakerCards = speakers.map(e => views.html.speakernamecard(e))
+          val speakerCards = views.html.speakernamecard(speakers.head,true) +: speakers.tail.map(e => views.html.speakernamecard(e,false))
           val pg = views.html.event(kv._2.head._1,speakers)
           val speakerCardsHtml = speakerCards.foldLeft(new Html("")){(h1,k1) => new Html(h1.body + k1.body)}
           new Html(html.body + pg.body + speakerCardsHtml)

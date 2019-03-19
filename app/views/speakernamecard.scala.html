@@ -1,5 +1,5 @@
 @import model2.Tables.SpeakersRow
-@(person:SpeakersRow)
+@(person:SpeakersRow,isFirst:Boolean)
 <section class="wrapper style4 container">
     <div class="row 150%">
         <div class="5u 11u(narrower)">
@@ -16,6 +16,7 @@
             <div class="sidebar">
                 <section>
                     <header>
+			@if(isFirst) {<h2>Speakers:</h2>}
                         <h3>@person.name</h3>
                     </header>
                     @if(person.media != "") { <a href="" class="image featured"><img
