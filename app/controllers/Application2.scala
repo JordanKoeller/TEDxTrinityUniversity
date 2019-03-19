@@ -146,7 +146,7 @@ class Application @Inject() (
        ("https://www.assistingseniors.com/","assets/images/Bertsch.png"),
        ("https://inside.trinity.edu/get-involved/student-organizations/university-sponsored-organizations/student-government-association","assets/images/SGA.png"),
        ("https://new.trinity.edu/academics/majors-minors/entrepreneurship","assets/images/entrepenuership-final.png"),
-       ("","assets/images/aummLogo.jpg"),
+       ("https://companiestx.com/company/32054545481/aumm-inc","assets/images/aummLogo.jpg"),
       )
     Ok(views.html.main("Sponsors",views.html.CaptionedImage(allSponsors)))
   }
