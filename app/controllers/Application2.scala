@@ -110,7 +110,7 @@ class Application @Inject() (
 
   def aboutTed = Action {
     val content = views.html.aboutTed()
-    Ok(views.html.main("About Ted",content))
+    Ok(views.html.main("About TED",content))
   }
   //
   def upcomingEvent = Action.async {
