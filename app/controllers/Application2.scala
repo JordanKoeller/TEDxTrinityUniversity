@@ -144,7 +144,9 @@ class Application @Inject() (
     val allSponsors = Seq(
        ("https://new.trinity.edu/","assets/images/TULogo.png"),
        ("https://www.assistingseniors.com/","assets/images/Bertsch.png"),
-       ("https://new.trinity.edu/academics/departments/business-administration","assets/images/BusinessDept.jpg")
+       ("https://inside.trinity.edu/get-involved/student-organizations/university-sponsored-organizations/student-government-association","assets/images/SGA.png"),
+       ("https://new.trinity.edu/academics/majors-minors/entrepreneurship","assets/images/entrepeneurship.png"),
+       ("","assets/images/aummLogo.jpg"),
       )
     Ok(views.html.main("Sponsors",views.html.CaptionedImage(allSponsors)))
   }
