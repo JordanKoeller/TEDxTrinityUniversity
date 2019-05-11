@@ -10,7 +10,6 @@ import play.api.mvc.AbstractController
 import play.api.mvc.ControllerComponents
 import play.twirl.api.Html
 import model2.Tables._
-import util._
 
 @Singleton
 class Application @Inject() (
