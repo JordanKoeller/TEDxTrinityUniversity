@@ -151,5 +151,11 @@ class Application @Inject() (
     Ok(views.html.main("Sponsors",views.html.CaptionedImage(allSponsors)))
   }
 
+  def speakerForm = Action {
+    val link = "/speakerForm"
+    val extras = Array[String]()
+    Ok(views.html.main("Interested in giving a talk?",views.html.generalForm(link,extras)))
+  }
+
 
 }
